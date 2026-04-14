@@ -46,103 +46,73 @@
       line-height: 1.6;
       overflow-x: hidden;
       
-      /* FITUR ANTI COPY - Mencegah user memblok/menyeleksi teks */
+      /* FITUR ANTI COPY */
       -webkit-user-select: none;
       -moz-user-select: none;
       -ms-user-select: none;
       user-select: none;
-      -webkit-touch-callout: none; /* Cegah menu pop-up di iOS */
+      -webkit-touch-callout: none;
     }
 
     body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 80% 60% at 50% -10%, rgba(37, 99, 235, 0.06) 0%, transparent 70%),
-        radial-gradient(ellipse 40% 40% at 90% 80%, rgba(22, 163, 74, 0.04) 0%, transparent 60%);
-      pointer-events: none;
-      z-index: 0;
+      content: ''; position: fixed; inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(37, 99, 235, 0.06) 0%, transparent 70%),
+                  radial-gradient(ellipse 40% 40% at 90% 80%, rgba(22, 163, 74, 0.04) 0%, transparent 60%);
+      pointer-events: none; z-index: 0;
     }
 
-    .page-wrap {
-      position: relative;
-      z-index: 1;
-      min-height: 100vh;
-    }
+    .page-wrap { position: relative; z-index: 1; min-height: 100vh; }
 
-    /* ── OVERLAY ANTI CHEAT (LAYAR HITAM) ── */
+    /* ── OVERLAY ANTI CHEAT (LAYAR HITAM & POP-UP) ── */
     #cheatOverlay {
-      position: fixed;
-      inset: 0;
-      background: #0a0c10;
-      color: var(--danger);
-      z-index: 99999;
-      display: none; /* Default tersembunyi */
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      text-align: center;
-      padding: 20px;
+      position: fixed; inset: 0; background: rgba(10, 12, 16, 0.98); color: white;
+      z-index: 99999; display: none; align-items: center; justify-content: center;
+      flex-direction: column; text-align: center; padding: 24px;
+      backdrop-filter: blur(10px);
     }
-    #cheatOverlay h1 { font-size: 32px; font-weight: 700; margin-bottom: 12px; }
-    #cheatOverlay p { color: #cbd5e1; font-size: 16px; max-width: 400px; }
+    .cheat-card {
+      background: #1e293b; padding: 32px 24px; border-radius: 20px;
+      border: 1px solid rgba(220, 38, 38, 0.3); max-width: 400px; width: 100%;
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+    }
+    .cheat-card h1 { font-size: 20px; font-weight: 700; color: #f87171; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .cheat-card p { color: #cbd5e1; font-size: 14px; margin-bottom: 20px; }
+    .cheat-counter {
+      background: rgba(220, 38, 38, 0.15); border: 1px solid rgba(220, 38, 38, 0.4);
+      padding: 12px; border-radius: 12px; font-family: 'DM Mono', monospace; font-size: 18px;
+      font-weight: 700; color: #ef4444; margin-bottom: 24px;
+    }
+
+    /* ── BANNER PERINGATAN (DI ATAS SOAL) ── */
+    #warningBanner {
+      background: #fef2f2; border: 1px solid #f87171; color: #b91c1c;
+      padding: 12px 20px; border-radius: 12px; font-size: 13px; font-weight: 600;
+      margin-bottom: 24px; display: none; align-items: center; gap: 10px;
+      box-shadow: 0 4px 6px -1px rgba(220, 38, 38, 0.1);
+    }
+    #warningBanner.active { display: flex; }
+    #warningBanner svg { width: 20px; height: 20px; flex-shrink: 0; }
 
     /* ── TOP BAR ── */
-    .topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 16px 32px;
-      border-bottom: 1px solid var(--border);
-      backdrop-filter: blur(20px);
-      background: rgba(255, 255, 255, 0.85); 
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-    .topbar-brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .brand-icon {
-      width: 32px; height: 32px;
-      background: linear-gradient(135deg, var(--accent), #60a5fa);
-      border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-    }
+    .topbar { display: flex; align-items: center; justify-content: space-between; padding: 16px 32px; border-bottom: 1px solid var(--border); backdrop-filter: blur(20px); background: rgba(255, 255, 255, 0.85); position: sticky; top: 0; z-index: 100; }
+    .topbar-brand { display: flex; align-items: center; gap: 12px; }
+    .brand-icon { width: 32px; height: 32px; background: linear-gradient(135deg, var(--accent), #60a5fa); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
     .brand-icon svg { width: 18px; height: 18px; }
     .brand-name { font-size: 14px; font-weight: 500; color: var(--text-secondary); }
     .brand-name span { color: var(--text-primary); font-weight: 600; }
-    .topbar-badge {
-      font-size: 11px; font-family: 'DM Mono', monospace; color: var(--accent);
-      background: var(--accent-dim); border: 1px solid var(--border-accent);
-      padding: 4px 10px; border-radius: 20px; font-weight: 600; letter-spacing: 0.05em;
-    }
+    .topbar-badge { font-size: 11px; font-family: 'DM Mono', monospace; color: var(--accent); background: var(--accent-dim); border: 1px solid var(--border-accent); padding: 4px 10px; border-radius: 20px; font-weight: 600; letter-spacing: 0.05em; }
 
     /* ── SCREEN SYSTEM ── */
     .screen { display: none; }
     .screen.active { display: flex; }
 
     /* ── SCREEN: INFO ── */
-    #infoScreen {
-      min-height: calc(100vh - 65px); align-items: center; justify-content: center; padding: 48px 16px;
-    }
+    #infoScreen { min-height: calc(100vh - 65px); align-items: center; justify-content: center; padding: 48px 16px; }
     .info-container { width: 100%; max-width: 640px; }
     .info-hero { text-align: center; margin-bottom: 40px; }
-    .info-eyebrow {
-      display: inline-flex; align-items: center; gap: 6px; font-size: 11px;
-      font-family: 'DM Mono', monospace; font-weight: 600; letter-spacing: 0.12em;
-      color: var(--accent); background: var(--accent-dim); border: 1px solid var(--border-accent);
-      padding: 5px 12px; border-radius: 20px; margin-bottom: 20px; text-transform: uppercase;
-    }
-    .info-eyebrow::before {
-      content: ''; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; animation: pulse 2s infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.6; transform: scale(0.8); }
-    }
+    .info-eyebrow { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-family: 'DM Mono', monospace; font-weight: 600; letter-spacing: 0.12em; color: var(--accent); background: var(--accent-dim); border: 1px solid var(--border-accent); padding: 5px 12px; border-radius: 20px; margin-bottom: 20px; text-transform: uppercase; }
+    .info-eyebrow::before { content: ''; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.6; transform: scale(0.8); } }
     .info-title { font-size: 32px; font-weight: 700; color: var(--text-primary); letter-spacing: -0.03em; line-height: 1.2; margin-bottom: 12px; }
     .info-subtitle { font-size: 15px; color: var(--text-secondary); font-weight: 400; }
 
@@ -237,6 +207,13 @@
     .btn-submit { width: 100%; padding: 16px; background: var(--success); color: #ffffff; border: none; border-radius: 12px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 4px 12px rgba(22, 163, 74, 0.2); }
     .btn-submit:hover { background: #15803d; transform: translateY(-1px); }
 
+    /* Profile chip */
+    .profile-chip { display: flex; align-items: center; gap: 12px; padding: 14px 20px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; margin-bottom: 20px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
+    .profile-avatar { width: 36px; height: 36px; border-radius: 10px; background: var(--accent-dim); border: 1px solid rgba(37,99,235,0.2); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: var(--accent); font-family: 'DM Mono', monospace; flex-shrink: 0; }
+    .profile-info { flex: 1; min-width: 0; }
+    .profile-name { font-size: 14px; font-weight: 600; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .profile-jabatan { font-size: 12px; color: var(--text-muted); font-family: 'DM Mono', monospace; }
+
     /* ── SCREEN: FINISH ── */
     #finishScreen { min-height: calc(100vh - 65px); align-items: center; justify-content: center; padding: 48px 16px; }
     .finish-container { width: 100%; max-width: 520px; }
@@ -246,11 +223,9 @@
     .finish-icon svg { width: 32px; height: 32px; stroke: var(--success); }
     .finish-title { font-size: 24px; font-weight: 700; letter-spacing: -0.02em; color: var(--text-primary); margin-bottom: 8px; }
     .finish-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
-
     .score-display { padding: 32px; text-align: center; border-bottom: 1px solid var(--border); background: var(--bg-elevated); }
     .score-label { font-size: 12px; font-weight: 600; font-family: 'DM Mono', monospace; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px; }
     .score-number { font-size: 80px; font-weight: 700; font-family: 'DM Mono', monospace; color: var(--accent); letter-spacing: -0.04em; line-height: 1; }
-
     .detail-rows { padding: 12px 0; }
     .detail-row { display: flex; justify-content: space-between; align-items: center; padding: 14px 32px; border-bottom: 1px solid var(--border); }
     .detail-row:last-child { border-bottom: none; }
@@ -261,12 +236,6 @@
     .detail-val.blue { color: var(--accent); }
     .finish-actions { padding: 24px 32px; border-top: 1px solid var(--border); background: var(--bg-elevated); }
     .btn-exit { width: 100%; padding: 14px; background: #ffffff; border: 1px solid var(--border); border-radius: 12px; color: var(--text-primary); font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.15s; }
-
-    .profile-chip { display: flex; align-items: center; gap: 12px; padding: 14px 20px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; margin-bottom: 20px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
-    .profile-avatar { width: 36px; height: 36px; border-radius: 10px; background: var(--accent-dim); border: 1px solid rgba(37,99,235,0.2); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: var(--accent); font-family: 'DM Mono', monospace; flex-shrink: 0; }
-    .profile-info { flex: 1; min-width: 0; }
-    .profile-name { font-size: 14px; font-weight: 600; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .profile-jabatan { font-size: 12px; color: var(--text-muted); font-family: 'DM Mono', monospace; }
 
     @media (max-width: 768px) {
       #examScreen { flex-direction: column; padding: 16px; gap: 16px; }
@@ -283,8 +252,16 @@
 <body>
 
 <div id="cheatOverlay">
-  <h1>⚠ PELANGGARAN TERDETEKSI</h1>
-  <p>Anda mencoba meninggalkan halaman ujian atau melakukan tangkapan layar. Sistem telah mencatat aktivitas ini.</p>
+  <div class="cheat-card" id="cheatCardContent">
+    <h1>⚠ Akses Soal Terkunci</h1>
+    <p id="cheatReasonText">Sistem mendeteksi Anda keluar dari mode layar penuh atau memindahkan layar (indikasi screenshot/pindah tab).</p>
+    
+    <div class="cheat-counter">
+      Pelanggaran: <span id="overlayWarnCount">0</span>/3
+    </div>
+
+    <button class="btn-cta" onclick="resumeExam()">Klik Untuk Layar Penuh & Lanjut</button>
+  </div>
 </div>
 
 <div class="page-wrap">
@@ -321,7 +298,7 @@
           </div>
           <div class="rule-item">
             <div class="rule-icon gold">🔒</div>
-            <div class="rule-text"><strong>Wajib Layar Penuh (Fullscreen)</strong>. Ujian tidak bisa dilakukan jika Anda keluar dari mode fullscreen.</div>
+            <div class="rule-text"><strong>Wajib Layar Penuh (Fullscreen)</strong>. Ujian akan dikunci secara otomatis jika Anda keluar dari mode fullscreen.</div>
           </div>
         </div>
       </div>
@@ -370,6 +347,15 @@
 
   <div id="examScreen" class="screen">
     <div class="exam-main">
+      
+      <div id="warningBanner">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+          <line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line>
+        </svg>
+        <div>PELANGGARAN TERCATAT (<span id="bannerWarnCount">0</span>/3) : Harap patuhi tata tertib ujian.</div>
+      </div>
+
       <div class="question-card">
         <div class="q-header">
           <div class="q-meta">
@@ -401,22 +387,14 @@
       <div class="sidebar-card">
         <div class="sidebar-header">Progress</div>
         <div class="stats-row">
-          <div class="stat-item">
-            <div class="stat-val green" id="statAnswered">0</div>
-            <div class="stat-label">Terjawab</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-val muted" id="statEmpty">0</div>
-            <div class="stat-label">Kosong</div>
-          </div>
+          <div class="stat-item"><div class="stat-val green" id="statAnswered">0</div><div class="stat-label">Terjawab</div></div>
+          <div class="stat-item"><div class="stat-val muted" id="statEmpty">0</div><div class="stat-label">Kosong</div></div>
         </div>
       </div>
 
       <div class="sidebar-card">
         <div class="sidebar-header">Navigasi Soal</div>
-        <div class="sidebar-body">
-          <div class="nav-grid" id="navGrid"></div>
-        </div>
+        <div class="sidebar-body"><div class="nav-grid" id="navGrid"></div></div>
         <div class="legend">
           <div class="legend-item"><div class="legend-dot green"></div> Terjawab</div>
           <div class="legend-item"><div class="legend-dot dim"></div> Belum</div>
@@ -426,8 +404,7 @@
       <button class="btn-submit" id="btnSubmit" onclick="finish()">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
           <polyline points="20 6 9 17 4 12"></polyline>
-        </svg>
-        Selesai & Submit
+        </svg> Selesai & Submit
       </button>
     </div>
   </div>
@@ -475,6 +452,7 @@
   // Variabel Sistem Anti Curang
   let peringatanCurang = 0;
   let ujianAktif = false;
+  let isViolating = false; // Mencegah perhitungan double saat multi-event di mobile
   const overlay = document.getElementById('cheatOverlay');
 
   function showScreen(id) {
@@ -485,12 +463,17 @@
   function showInfo() { showScreen('infoScreen'); }
   function showLogin() { showScreen('loginScreen'); }
 
-  // Fungsi memaksa layar penuh (Fullscreen)
+  // FUNGSI MEMINTA FULLSCREEN
   async function requestFullscreen() {
     const doc = document.documentElement;
     if (doc.requestFullscreen) { await doc.requestFullscreen(); } 
     else if (doc.webkitRequestFullscreen) { await doc.webkitRequestFullscreen(); } 
     else if (doc.msRequestFullscreen) { await doc.msRequestFullscreen(); }
+  }
+
+  // Cek apakah mode fullscreen aktif
+  function isFullscreen() {
+    return document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;
   }
 
   function formatTanggalIndo(text) {
@@ -499,20 +482,15 @@
     const r1 = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/;
     const r2 = /^(\d{4})-(\d{1,2})-(\d{1,2})/;
     let d, m, y;
-    if (r1.test(text)) {
-      const mx = text.match(r1);
-      d = parseInt(mx[1]); m = parseInt(mx[2]) - 1; y = parseInt(mx[3]);
-    } else if (r2.test(text) && !isNaN(Date.parse(text))) {
-      const dt = new Date(text);
-      d = dt.getDate(); m = dt.getMonth(); y = dt.getFullYear();
-    } else return text;
+    if (r1.test(text)) { const mx = text.match(r1); d = parseInt(mx[1]); m = parseInt(mx[2]) - 1; y = parseInt(mx[3]); } 
+    else if (r2.test(text) && !isNaN(Date.parse(text))) { const dt = new Date(text); d = dt.getDate(); m = dt.getMonth(); y = dt.getFullYear(); } 
+    else return text;
     return m >= 0 && m < 12 ? `${d} ${bulanIndo[m]} ${y}` : text;
   }
 
   async function callAPI(action, payloadData) {
     const r = await fetch(API_URL, {
-      method: "POST",
-      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" },
       body: JSON.stringify({ action, payload: payloadData })
     });
     return await r.json();
@@ -522,7 +500,6 @@
     const btn = document.getElementById('btnLogin');
     const errBox = document.getElementById('errorBox');
     
-    // Minta Fullscreen saat tombol login ditekan (Syarat Browser)
     try { await requestFullscreen(); } catch(e) { console.log("Gagal memuat fullscreen otomatis"); }
 
     btn.disabled = true;
@@ -649,7 +626,6 @@
   async function prosesSubmit() {
     ujianAktif = false;
     clearInterval(timer);
-    // Matikan overlay jika menyala
     overlay.style.display = 'none';
 
     const btn = document.getElementById('btnSubmit');
@@ -675,9 +651,7 @@
         document.getElementById('jawabanBenar').innerText = (skor / 5) + " soal";
         document.getElementById('skorAkhir').innerText = skor;
 
-        // Keluar dari Fullscreen saat ujian selesai
         if (document.exitFullscreen) { document.exitFullscreen(); }
-
         showScreen('finishScreen');
       } else throw new Error(res.message);
     } catch (err) {
@@ -693,72 +667,82 @@
      SISTEM KEAMANAN & ANTI CURANG (CLIENT SIDE)
      ========================================== */
 
-  // 1. Eksekusi Hukuman Pelanggaran
   function catatPelanggaran(alasan) {
-    if (!ujianAktif) return;
+    if (!ujianAktif || isViolating) return; // Mencegah hit ganda
+    
+    isViolating = true;
     peringatanCurang++;
     
-    // Tampilkan overlay hitam secepat mungkin
+    // Munculkan Banner di bagian atas (stay terus)
+    document.getElementById('bannerWarnCount').innerText = peringatanCurang;
+    document.getElementById('warningBanner').classList.add('active');
+
+    // Munculkan Overlay Kunci Layar
+    document.getElementById('overlayWarnCount').innerText = peringatanCurang;
     overlay.style.display = 'flex';
 
-    // Beri jeda kecil agar overlay sempat ter-render sebelum alert memblokir proses
-    setTimeout(() => {
-      if (peringatanCurang >= 3) {
-        alert(`PELANGGARAN FATAL: ${alasan}!\nBatas pelanggaran telah tercapai (3/3). Ujian dihentikan dan disubmit otomatis.`);
-        prosesSubmit();
-      } else {
-        alert(`PERINGATAN (${peringatanCurang}/3): ${alasan}.\nHarap kembali ke halaman ujian!`);
-        // Jika kembali fokus, sembunyikan overlay
-        overlay.style.display = 'none';
-      }
-    }, 200);
+    // Jika sudah 3 kali, auto-submit
+    if (peringatanCurang >= 3) {
+      document.getElementById('cheatCardContent').innerHTML = `
+        <h1 style="color:#ef4444;">🔒 UJIAN DIHENTIKAN</h1>
+        <p>Batas pelanggaran (3/3) telah tercapai. Sistem sedang mengirimkan jawaban Anda secara otomatis...</p>
+      `;
+      prosesSubmit();
+    }
   }
 
-  // 2. Deteksi Keluar dari Fullscreen
+  // Fungsi saat peserta mengklik tombol "Lanjut" di Overlay Pop-up
+  async function resumeExam() {
+    try {
+      await requestFullscreen();
+      // Verifikasi apakah berhasil masuk layar penuh
+      setTimeout(() => {
+        if (isFullscreen()) {
+          overlay.style.display = 'none';
+          isViolating = false; // Buka kunci detektor
+        } else {
+          alert("Akses layar penuh ditolak oleh browser. Pastikan Anda mengizinkan Layar Penuh.");
+        }
+      }, 300); // Sedikit delay agar browser sempat merespon
+    } catch(e) {
+      // Fallback untuk iOS Safari yang mungkin bermasalah dengan API fullscreen
+      console.log("Browser tidak mendeteksi Fullscreen API normal.", e);
+      overlay.style.display = 'none';
+      isViolating = false;
+    }
+  }
+
+  // Deteksi kelakuan peserta
   document.addEventListener('fullscreenchange', () => {
-    if (!document.fullscreenElement && ujianAktif) {
-      catatPelanggaran("Anda keluar dari mode Layar Penuh");
+    if (!isFullscreen() && ujianAktif) {
+      catatPelanggaran(); 
     }
   });
 
-  // 3. Deteksi Pindah Tab (Visibility) & Screenshot/Recent Apps (Blur)
-  document.addEventListener("visibilitychange", () => {
-    if (document.hidden && ujianAktif) {
-      catatPelanggaran("Sistem mendeteksi perpindahan tab atau aplikasi");
-    }
-  });
-
+  // Blur untuk deteksi Screenshot / Recent Apps
   window.addEventListener("blur", () => {
     if (ujianAktif) {
-      // Langsung munculkan layar hitam saat blur (Untuk menangkal screenshot)
-      overlay.style.display = 'flex';
-      catatPelanggaran("Layar kehilangan fokus / Membuka notifikasi");
+      overlay.style.display = 'flex'; // Paksa langsung tutupi layar biar hasil screenshot gelap
+      catatPelanggaran();
     }
   });
 
-  window.addEventListener("focus", () => {
-    if (ujianAktif) { overlay.style.display = 'none'; }
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden && ujianAktif) {
+      catatPelanggaran();
+    }
   });
 
-  // 4. Blokir Klik Kanan (Context Menu)
-  document.addEventListener('contextmenu', event => {
-    if(ujianAktif) event.preventDefault();
-  });
+  // Blokir Klik Kanan
+  document.addEventListener('contextmenu', event => { if(ujianAktif) event.preventDefault(); });
 
-  // 5. Blokir Tombol Shortcut Tertentu (Ctrl+C, Ctrl+V, Print, Inspect Element)
+  // Blokir Shortcut (F12, Copy, Paste, Print, dll)
   document.addEventListener('keydown', event => {
     if (!ujianAktif) return;
-    
-    // Cegah F12
-    if (event.key === 'F12') {
-      event.preventDefault();
-    }
-    // Cegah kombinasi Ctrl
+    if (event.key === 'F12') { event.preventDefault(); }
     if (event.ctrlKey) {
       const forbiddenKeys = ['c', 'v', 'x', 'p', 's', 'u', 'i', 'j'];
-      if (forbiddenKeys.includes(event.key.toLowerCase())) {
-        event.preventDefault();
-      }
+      if (forbiddenKeys.includes(event.key.toLowerCase())) { event.preventDefault(); }
     }
   });
 
