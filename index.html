@@ -9,8 +9,7 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      /* LIGHT MODE COLOR PALETTE */
-      --bg: #f4f7fb;              
+      var(--bg): #f4f7fb;              
       --bg-card: #ffffff;         
       --bg-elevated: #f8fafc;     
       --bg-input: #ffffff;        
@@ -40,12 +39,19 @@
     }
 
     body {
-      background: var(--bg);
+      background: #f4f7fb;
       color: var(--text-primary);
       font-family: 'DM Sans', sans-serif;
       min-height: 100vh;
       line-height: 1.6;
       overflow-x: hidden;
+      
+      /* FITUR ANTI COPY - Mencegah user memblok/menyeleksi teks */
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      -webkit-touch-callout: none; /* Cegah menu pop-up di iOS */
     }
 
     body::before {
@@ -64,6 +70,23 @@
       z-index: 1;
       min-height: 100vh;
     }
+
+    /* ── OVERLAY ANTI CHEAT (LAYAR HITAM) ── */
+    #cheatOverlay {
+      position: fixed;
+      inset: 0;
+      background: #0a0c10;
+      color: var(--danger);
+      z-index: 99999;
+      display: none; /* Default tersembunyi */
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      padding: 20px;
+    }
+    #cheatOverlay h1 { font-size: 32px; font-weight: 700; margin-bottom: 12px; }
+    #cheatOverlay p { color: #cbd5e1; font-size: 16px; max-width: 400px; }
 
     /* ── TOP BAR ── */
     .topbar {
@@ -90,23 +113,12 @@
       display: flex; align-items: center; justify-content: center;
     }
     .brand-icon svg { width: 18px; height: 18px; }
-    .brand-name {
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--text-secondary);
-      letter-spacing: 0.02em;
-    }
+    .brand-name { font-size: 14px; font-weight: 500; color: var(--text-secondary); }
     .brand-name span { color: var(--text-primary); font-weight: 600; }
     .topbar-badge {
-      font-size: 11px;
-      font-family: 'DM Mono', monospace;
-      color: var(--accent);
-      background: var(--accent-dim);
-      border: 1px solid var(--border-accent);
-      padding: 4px 10px;
-      border-radius: 20px;
-      font-weight: 600;
-      letter-spacing: 0.05em;
+      font-size: 11px; font-family: 'DM Mono', monospace; color: var(--accent);
+      background: var(--accent-dim); border: 1px solid var(--border-accent);
+      padding: 4px 10px; border-radius: 20px; font-weight: 600; letter-spacing: 0.05em;
     }
 
     /* ── SCREEN SYSTEM ── */
@@ -115,691 +127,148 @@
 
     /* ── SCREEN: INFO ── */
     #infoScreen {
-      min-height: calc(100vh - 65px);
-      align-items: center;
-      justify-content: center;
-      padding: 48px 16px;
+      min-height: calc(100vh - 65px); align-items: center; justify-content: center; padding: 48px 16px;
     }
-    .info-container {
-      width: 100%;
-      max-width: 640px;
-    }
-    .info-hero {
-      text-align: center;
-      margin-bottom: 40px;
-    }
+    .info-container { width: 100%; max-width: 640px; }
+    .info-hero { text-align: center; margin-bottom: 40px; }
     .info-eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 11px;
-      font-family: 'DM Mono', monospace;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      color: var(--accent);
-      background: var(--accent-dim);
-      border: 1px solid var(--border-accent);
-      padding: 5px 12px;
-      border-radius: 20px;
-      margin-bottom: 20px;
-      text-transform: uppercase;
+      display: inline-flex; align-items: center; gap: 6px; font-size: 11px;
+      font-family: 'DM Mono', monospace; font-weight: 600; letter-spacing: 0.12em;
+      color: var(--accent); background: var(--accent-dim); border: 1px solid var(--border-accent);
+      padding: 5px 12px; border-radius: 20px; margin-bottom: 20px; text-transform: uppercase;
     }
     .info-eyebrow::before {
-      content: '';
-      width: 6px; height: 6px;
-      background: var(--accent);
-      border-radius: 50%;
-      animation: pulse 2s infinite;
+      content: ''; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; animation: pulse 2s infinite;
     }
     @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.6; transform: scale(0.8); }
+      0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.6; transform: scale(0.8); }
     }
-    .info-title {
-      font-size: 32px;
-      font-weight: 700;
-      color: var(--text-primary);
-      letter-spacing: -0.03em;
-      line-height: 1.2;
-      margin-bottom: 12px;
-    }
-    .info-subtitle {
-      font-size: 15px;
-      color: var(--text-secondary);
-      font-weight: 400;
-    }
+    .info-title { font-size: 32px; font-weight: 700; color: var(--text-primary); letter-spacing: -0.03em; line-height: 1.2; margin-bottom: 12px; }
+    .info-subtitle { font-size: 15px; color: var(--text-secondary); font-weight: 400; }
 
-    .rules-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      overflow: hidden;
-      margin-bottom: 16px;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-    }
-    .rules-header {
-      padding: 16px 24px;
-      border-bottom: 1px solid var(--border);
-      font-size: 12px;
-      font-family: 'DM Mono', monospace;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      background: var(--bg-elevated);
-    }
-    .rules-body {
-      padding: 8px 0;
-    }
-    .rule-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 14px;
-      padding: 14px 24px;
-      border-bottom: 1px solid var(--border);
-      transition: background 0.15s;
-    }
+    .rules-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin-bottom: 16px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
+    .rules-header { padding: 16px 24px; border-bottom: 1px solid var(--border); font-size: 12px; font-family: 'DM Mono', monospace; font-weight: 600; letter-spacing: 0.1em; color: var(--text-muted); text-transform: uppercase; background: var(--bg-elevated); }
+    .rules-body { padding: 8px 0; }
+    .rule-item { display: flex; align-items: flex-start; gap: 14px; padding: 14px 24px; border-bottom: 1px solid var(--border); }
     .rule-item:last-child { border-bottom: none; }
-    .rule-item:hover { background: var(--bg-elevated); }
-    .rule-icon {
-      width: 28px; height: 28px;
-      border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-      font-size: 13px;
-      margin-top: 1px;
-    }
+    .rule-icon { width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 13px; margin-top: 1px; }
     .rule-icon.blue { background: var(--accent-dim); color: var(--accent); }
     .rule-icon.green { background: var(--success-dim); color: var(--success); }
     .rule-icon.red { background: var(--danger-dim); color: var(--danger); }
     .rule-icon.gold { background: var(--gold-dim); color: var(--gold); }
-    .rule-text {
-      font-size: 14px;
-      color: var(--text-secondary);
-      line-height: 1.5;
-    }
+    .rule-text { font-size: 14px; color: var(--text-secondary); line-height: 1.5; }
     .rule-text strong { color: var(--text-primary); font-weight: 600; }
 
-    .warning-card {
-      background: var(--danger-dim);
-      border: 1px solid rgba(220,38,38,0.2);
-      border-radius: 12px;
-      padding: 14px 20px;
-      display: flex;
-      gap: 12px;
-      align-items: flex-start;
-      margin-bottom: 24px;
-      font-size: 13px;
-      color: var(--danger);
-      line-height: 1.5;
-    }
+    .warning-card { background: var(--danger-dim); border: 1px solid rgba(220,38,38,0.2); border-radius: 12px; padding: 14px 20px; display: flex; gap: 12px; align-items: flex-start; margin-bottom: 24px; font-size: 13px; color: var(--danger); line-height: 1.5; }
     .warning-card .warn-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
 
-    .btn-cta {
-      width: 100%;
-      padding: 16px;
-      background: var(--accent);
-      color: #ffffff;
-      border: none;
-      border-radius: 12px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 14px;
-      font-weight: 600;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: all 0.2s;
-      box-shadow: 0 4px 12px var(--accent-glow);
-    }
+    .btn-cta { width: 100%; padding: 16px; background: var(--accent); color: #ffffff; border: none; border-radius: 12px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 12px var(--accent-glow); }
     .btn-cta:hover { background: #1d4ed8; transform: translateY(-1px); }
-    .btn-cta:active { transform: translateY(0); }
     .btn-cta:disabled { opacity: 0.5; cursor: not-allowed; }
 
     /* ── SCREEN: LOGIN ── */
-    #loginScreen {
-      min-height: calc(100vh - 65px);
-      align-items: center;
-      justify-content: center;
-      padding: 48px 16px;
-    }
-    .login-container {
-      width: 100%;
-      max-width: 420px;
-    }
-    .login-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
-    }
-    .login-header {
-      padding: 28px 28px 0;
-      text-align: center;
-    }
-    .login-header h2 {
-      font-size: 24px;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      color: var(--text-primary);
-      margin-bottom: 6px;
-    }
-    .login-header p {
-      font-size: 14px;
-      color: var(--text-secondary);
-    }
+    #loginScreen { min-height: calc(100vh - 65px); align-items: center; justify-content: center; padding: 48px 16px; }
+    .login-container { width: 100%; max-width: 420px; }
+    .login-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05); }
+    .login-header { padding: 28px 28px 0; text-align: center; }
+    .login-header h2 { font-size: 24px; font-weight: 700; letter-spacing: -0.02em; color: var(--text-primary); margin-bottom: 6px; }
+    .login-header p { font-size: 14px; color: var(--text-secondary); }
     .login-body { padding: 24px 28px 28px; }
     .field-group { margin-bottom: 16px; }
-    .field-label {
-      display: block;
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 8px;
-    }
-    .field-input {
-      width: 100%;
-      background: var(--bg-input);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 12px 16px;
-      color: var(--text-primary);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 14px;
-      transition: border-color 0.2s, box-shadow 0.2s;
-      outline: none;
-    }
-    .field-input::placeholder { color: #94a3b8; }
-    .field-input:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px var(--accent-glow);
-    }
-    .field-input.code-input {
-      font-family: 'DM Mono', monospace;
-      font-size: 16px;
-      letter-spacing: 0.1em;
-      text-align: center;
-    }
-    .error-box {
-      background: var(--danger-dim);
-      border: 1px solid rgba(220,38,38,0.25);
-      border-radius: 10px;
-      padding: 12px 16px;
-      font-size: 13px;
-      color: var(--danger);
-      margin-bottom: 16px;
-      display: none;
-    }
-    .divider {
-      height: 1px;
-      background: var(--border);
-      margin: 24px 0;
-    }
-    .back-link {
-      display: block;
-      text-align: center;
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-muted);
-      cursor: pointer;
-      margin-top: 16px;
-      transition: color 0.2s;
-    }
-    .back-link:hover { color: var(--accent); }
+    .field-label { display: block; font-size: 12px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
+    .field-input { width: 100%; background: var(--bg-input); border: 1px solid var(--border); border-radius: 10px; padding: 12px 16px; color: var(--text-primary); font-family: 'DM Sans', sans-serif; font-size: 14px; outline: none; }
+    .field-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
+    .field-input.code-input { font-family: 'DM Mono', monospace; font-size: 16px; letter-spacing: 0.1em; text-align: center; }
+    .error-box { background: var(--danger-dim); border: 1px solid rgba(220,38,38,0.25); border-radius: 10px; padding: 12px 16px; font-size: 13px; color: var(--danger); margin-bottom: 16px; display: none; }
+    .divider { height: 1px; background: var(--border); margin: 24px 0; }
+    .back-link { display: block; text-align: center; font-size: 13px; font-weight: 500; color: var(--text-muted); cursor: pointer; margin-top: 16px; }
 
     /* ── SCREEN: EXAM ── */
-    #examScreen {
-      min-height: calc(100vh - 65px);
-      align-items: flex-start;
-      padding: 32px 24px;
-      gap: 24px;
-      max-width: 1100px;
-      margin: 0 auto;
-      width: 100%;
-    }
+    #examScreen { min-height: calc(100vh - 65px); align-items: flex-start; padding: 32px 24px; gap: 24px; max-width: 1100px; margin: 0 auto; width: 100%; }
     .exam-main { flex: 1; min-width: 0; }
-    .exam-sidebar {
-      width: 300px;
-      flex-shrink: 0;
-      position: sticky;
-      top: 90px;
-    }
+    .exam-sidebar { width: 300px; flex-shrink: 0; position: sticky; top: 90px; }
 
-    .question-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-    }
-    .q-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 18px 28px;
-      border-bottom: 1px solid var(--border);
-      background: var(--bg-elevated);
-    }
-    .q-meta {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .q-num {
-      font-family: 'DM Mono', monospace;
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text-primary);
-      letter-spacing: 0.05em;
-    }
-    .q-cat {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--accent);
-      background: var(--accent-dim);
-      border: 1px solid var(--border-accent);
-      padding: 4px 10px;
-      border-radius: 20px;
-    }
-    .timer-display {
-      font-family: 'DM Mono', monospace;
-      font-size: 18px;
-      font-weight: 600;
-      color: var(--text-primary);
-      letter-spacing: 0.08em;
-      padding: 6px 14px;
-      background: var(--bg-input);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      transition: color 0.3s, background 0.3s, border-color 0.3s;
-    }
-    .timer-display.urgent {
-      color: var(--danger);
-      background: #fee2e2;
-      border-color: rgba(220,38,38,0.3);
-      animation: timerPulse 1s infinite;
-    }
+    .question-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
+    .q-header { display: flex; align-items: center; justify-content: space-between; padding: 18px 28px; border-bottom: 1px solid var(--border); background: var(--bg-elevated); }
+    .q-meta { display: flex; align-items: center; gap: 12px; }
+    .q-num { font-family: 'DM Mono', monospace; font-size: 14px; font-weight: 600; color: var(--text-primary); letter-spacing: 0.05em; }
+    .q-cat { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); background: var(--accent-dim); border: 1px solid var(--border-accent); padding: 4px 10px; border-radius: 20px; }
+    .timer-display { font-family: 'DM Mono', monospace; font-size: 18px; font-weight: 600; color: var(--text-primary); letter-spacing: 0.08em; padding: 6px 14px; background: var(--bg-input); border: 1px solid var(--border); border-radius: 8px; transition: color 0.3s, background 0.3s, border-color 0.3s; }
+    .timer-display.urgent { color: var(--danger); background: #fee2e2; border-color: rgba(220,38,38,0.3); animation: timerPulse 1s infinite; }
 
     .q-body { padding: 32px 28px; }
-    .q-text {
-      font-size: 17px;
-      line-height: 1.7;
-      color: var(--text-primary);
-      margin-bottom: 32px;
-      font-weight: 400;
-    }
+    .q-text { font-size: 17px; line-height: 1.7; color: var(--text-primary); margin-bottom: 32px; font-weight: 400; }
 
     .options-list { display: flex; flex-direction: column; gap: 12px; }
-    .option-btn {
-      display: flex;
-      align-items: flex-start;
-      gap: 14px;
-      padding: 16px 20px;
-      background: var(--bg-input);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      cursor: pointer;
-      transition: all 0.15s;
-      text-align: left;
-      width: 100%;
-      font-family: 'DM Sans', sans-serif;
-      color: var(--text-secondary);
-      font-size: 15px;
-      line-height: 1.5;
-    }
-    .option-btn:hover {
-      border-color: var(--accent);
-      background: var(--bg-elevated);
-      color: var(--text-primary);
-    }
-    .option-btn.selected {
-      background: var(--accent-dim);
-      border-color: var(--accent);
-      color: var(--text-primary);
-      font-weight: 500;
-    }
-    .option-btn.selected .opt-label {
-      background: var(--accent);
-      color: #ffffff;
-      border-color: transparent;
-    }
-    .opt-label {
-      width: 28px; height: 28px;
-      border-radius: 7px;
-      background: var(--bg-elevated);
-      border: 1px solid var(--border);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 13px;
-      font-weight: 600;
-      font-family: 'DM Mono', monospace;
-      flex-shrink: 0;
-      color: var(--text-muted);
-      transition: all 0.15s;
-    }
+    .option-btn { display: flex; align-items: flex-start; gap: 14px; padding: 16px 20px; background: var(--bg-input); border: 1px solid var(--border); border-radius: 10px; cursor: pointer; transition: all 0.15s; text-align: left; width: 100%; font-family: 'DM Sans', sans-serif; color: var(--text-secondary); font-size: 15px; line-height: 1.5; }
+    .option-btn:hover { border-color: var(--accent); background: var(--bg-elevated); color: var(--text-primary); }
+    .option-btn.selected { background: var(--accent-dim); border-color: var(--accent); color: var(--text-primary); font-weight: 500; }
+    .option-btn.selected .opt-label { background: var(--accent); color: #ffffff; border-color: transparent; }
+    .opt-label { width: 28px; height: 28px; border-radius: 7px; background: var(--bg-elevated); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; font-family: 'DM Mono', monospace; flex-shrink: 0; color: var(--text-muted); transition: all 0.15s; }
     .opt-text { padding-top: 3px; }
 
-    .q-footer {
-      display: flex;
-      justify-content: space-between;
-      padding: 18px 28px;
-      border-top: 1px solid var(--border);
-      background: var(--bg-elevated);
-      gap: 12px;
-    }
-    .btn-nav-q {
-      padding: 12px 24px;
-      border-radius: 8px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.15s;
-      border: 1px solid var(--border);
-    }
-    .btn-prev {
-      background: var(--bg-input);
-      color: var(--text-secondary);
-    }
-    .btn-prev:hover { border-color: var(--text-muted); color: var(--text-primary); }
-    .btn-next {
-      background: var(--accent);
-      color: #ffffff;
-      border-color: transparent;
-      flex: 1;
-      max-width: 180px;
-    }
-    .btn-next:hover { background: #1d4ed8; }
+    .q-footer { display: flex; justify-content: space-between; padding: 18px 28px; border-top: 1px solid var(--border); background: var(--bg-elevated); gap: 12px; }
+    .btn-nav-q { padding: 12px 24px; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.15s; border: 1px solid var(--border); }
+    .btn-prev { background: var(--bg-input); color: var(--text-secondary); }
+    .btn-next { background: var(--accent); color: #ffffff; border-color: transparent; flex: 1; max-width: 180px; }
 
     /* Sidebar */
-    .sidebar-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      overflow: hidden;
-      margin-bottom: 20px;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-    }
-    .sidebar-header {
-      padding: 16px 20px;
-      border-bottom: 1px solid var(--border);
-      font-size: 12px;
-      font-weight: 600;
-      font-family: 'DM Mono', monospace;
-      letter-spacing: 0.05em;
-      color: var(--text-primary);
-      background: var(--bg-elevated);
-      text-transform: uppercase;
-    }
+    .sidebar-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin-bottom: 20px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
+    .sidebar-header { padding: 16px 20px; border-bottom: 1px solid var(--border); font-size: 12px; font-weight: 600; font-family: 'DM Mono', monospace; letter-spacing: 0.05em; color: var(--text-primary); background: var(--bg-elevated); text-transform: uppercase; }
     .sidebar-body { padding: 20px; }
-    .nav-grid {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 8px;
-    }
-    .nav-btn {
-      aspect-ratio: 1;
-      border-radius: 8px;
-      font-size: 12px;
-      font-family: 'DM Mono', monospace;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.15s;
-      border: 1px solid var(--border);
-      background: var(--bg-input);
-      color: var(--text-secondary);
-      display: flex; align-items: center; justify-content: center;
-    }
-    .nav-btn:hover { border-color: var(--accent); color: var(--accent); }
-    .nav-btn.answered {
-      background: var(--success-dim);
-      border-color: rgba(22,163,74,0.3);
-      color: var(--success);
-    }
-    .nav-btn.current {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: #ffffff;
-      box-shadow: 0 0 0 3px var(--accent-dim);
-    }
+    .nav-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+    .nav-btn { aspect-ratio: 1; border-radius: 8px; font-size: 12px; font-family: 'DM Mono', monospace; font-weight: 600; cursor: pointer; transition: all 0.15s; border: 1px solid var(--border); background: var(--bg-input); color: var(--text-secondary); display: flex; align-items: center; justify-content: center; }
+    .nav-btn.answered { background: var(--success-dim); border-color: rgba(22,163,74,0.3); color: var(--success); }
+    .nav-btn.current { background: var(--accent); border-color: var(--accent); color: #ffffff; box-shadow: 0 0 0 3px var(--accent-dim); }
 
-    .legend {
-      display: flex;
-      gap: 16px;
-      padding: 14px 20px;
-      border-top: 1px solid var(--border);
-      background: var(--bg-elevated);
-    }
-    .legend-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--text-secondary);
-    }
-    .legend-dot {
-      width: 10px; height: 10px;
-      border-radius: 3px;
-    }
+    .legend { display: flex; gap: 16px; padding: 14px 20px; border-top: 1px solid var(--border); background: var(--bg-elevated); }
+    .legend-item { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 500; color: var(--text-secondary); }
+    .legend-dot { width: 10px; height: 10px; border-radius: 3px; }
     .legend-dot.green { background: var(--success); }
     .legend-dot.dim { background: #cbd5e1; }
 
-    /* Stats in sidebar */
-    .stats-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      padding: 20px;
-    }
-    .stat-item {
-      background: var(--bg-elevated);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 14px;
-      text-align: center;
-    }
-    .stat-val {
-      font-size: 24px;
-      font-weight: 700;
-      font-family: 'DM Mono', monospace;
-      line-height: 1;
-      margin-bottom: 6px;
-    }
+    .stats-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 20px; }
+    .stat-item { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 12px; padding: 14px; text-align: center; }
+    .stat-val { font-size: 24px; font-weight: 700; font-family: 'DM Mono', monospace; line-height: 1; margin-bottom: 6px; }
     .stat-val.green { color: var(--success); }
     .stat-val.muted { color: var(--text-muted); }
     .stat-label { font-size: 12px; font-weight: 500; color: var(--text-secondary); }
 
-    .btn-submit {
-      width: 100%;
-      padding: 16px;
-      background: var(--success);
-      color: #ffffff;
-      border: none;
-      border-radius: 12px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 14px;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: all 0.2s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      box-shadow: 0 4px 12px rgba(22, 163, 74, 0.2);
-    }
+    .btn-submit { width: 100%; padding: 16px; background: var(--success); color: #ffffff; border: none; border-radius: 12px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 4px 12px rgba(22, 163, 74, 0.2); }
     .btn-submit:hover { background: #15803d; transform: translateY(-1px); }
-    .btn-submit:active { transform: translateY(0); }
-    .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; }
 
     /* ── SCREEN: FINISH ── */
-    #finishScreen {
-      min-height: calc(100vh - 65px);
-      align-items: center;
-      justify-content: center;
-      padding: 48px 16px;
-    }
-    .finish-container {
-      width: 100%;
-      max-width: 520px;
-    }
-    .finish-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
-    }
-    .finish-top {
-      padding: 40px 32px 28px;
-      text-align: center;
-      border-bottom: 1px solid var(--border);
-    }
-    .finish-icon {
-      width: 64px; height: 64px;
-      border-radius: 16px;
-      background: var(--success-dim);
-      border: 1px solid rgba(22,163,74,0.25);
-      display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 20px;
-    }
+    #finishScreen { min-height: calc(100vh - 65px); align-items: center; justify-content: center; padding: 48px 16px; }
+    .finish-container { width: 100%; max-width: 520px; }
+    .finish-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05); }
+    .finish-top { padding: 40px 32px 28px; text-align: center; border-bottom: 1px solid var(--border); }
+    .finish-icon { width: 64px; height: 64px; border-radius: 16px; background: var(--success-dim); border: 1px solid rgba(22,163,74,0.25); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
     .finish-icon svg { width: 32px; height: 32px; stroke: var(--success); }
-    .finish-title {
-      font-size: 24px;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      color: var(--text-primary);
-      margin-bottom: 8px;
-    }
-    .finish-desc {
-      font-size: 14px;
-      color: var(--text-secondary);
-      line-height: 1.6;
-    }
+    .finish-title { font-size: 24px; font-weight: 700; letter-spacing: -0.02em; color: var(--text-primary); margin-bottom: 8px; }
+    .finish-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
 
-    .score-display {
-      padding: 32px;
-      text-align: center;
-      border-bottom: 1px solid var(--border);
-      background: var(--bg-elevated);
-    }
-    .score-label {
-      font-size: 12px;
-      font-weight: 600;
-      font-family: 'DM Mono', monospace;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 12px;
-    }
-    .score-number {
-      font-size: 80px;
-      font-weight: 700;
-      font-family: 'DM Mono', monospace;
-      color: var(--accent);
-      letter-spacing: -0.04em;
-      line-height: 1;
-    }
+    .score-display { padding: 32px; text-align: center; border-bottom: 1px solid var(--border); background: var(--bg-elevated); }
+    .score-label { font-size: 12px; font-weight: 600; font-family: 'DM Mono', monospace; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px; }
+    .score-number { font-size: 80px; font-weight: 700; font-family: 'DM Mono', monospace; color: var(--accent); letter-spacing: -0.04em; line-height: 1; }
 
     .detail-rows { padding: 12px 0; }
-    .detail-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 14px 32px;
-      border-bottom: 1px solid var(--border);
-    }
+    .detail-row { display: flex; justify-content: space-between; align-items: center; padding: 14px 32px; border-bottom: 1px solid var(--border); }
     .detail-row:last-child { border-bottom: none; }
-    .detail-key {
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--text-secondary);
-    }
-    .detail-val {
-      font-size: 15px;
-      font-weight: 600;
-      font-family: 'DM Mono', monospace;
-      color: var(--text-primary);
-    }
+    .detail-key { font-size: 14px; font-weight: 500; color: var(--text-secondary); }
+    .detail-val { font-size: 15px; font-weight: 600; font-family: 'DM Mono', monospace; color: var(--text-primary); }
     .detail-val.green { color: var(--success); }
     .detail-val.red { color: var(--danger); }
     .detail-val.blue { color: var(--accent); }
+    .finish-actions { padding: 24px 32px; border-top: 1px solid var(--border); background: var(--bg-elevated); }
+    .btn-exit { width: 100%; padding: 14px; background: #ffffff; border: 1px solid var(--border); border-radius: 12px; color: var(--text-primary); font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.15s; }
 
-    .finish-actions {
-      padding: 24px 32px;
-      border-top: 1px solid var(--border);
-      background: var(--bg-elevated);
-    }
-    .btn-exit {
-      width: 100%;
-      padding: 14px;
-      background: #ffffff;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      color: var(--text-primary);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-    .btn-exit:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-      background: var(--bg-elevated);
-    }
-
-    /* Profile chip on exam screen */
-    .profile-chip {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 14px 20px;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      margin-bottom: 20px;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-    }
-    .profile-avatar {
-      width: 36px; height: 36px;
-      border-radius: 10px;
-      background: var(--accent-dim);
-      border: 1px solid rgba(37,99,235,0.2);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--accent);
-      font-family: 'DM Mono', monospace;
-      flex-shrink: 0;
-    }
+    .profile-chip { display: flex; align-items: center; gap: 12px; padding: 14px 20px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; margin-bottom: 20px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
+    .profile-avatar { width: 36px; height: 36px; border-radius: 10px; background: var(--accent-dim); border: 1px solid rgba(37,99,235,0.2); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: var(--accent); font-family: 'DM Mono', monospace; flex-shrink: 0; }
     .profile-info { flex: 1; min-width: 0; }
-    .profile-name {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text-primary);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .profile-jabatan {
-      font-size: 12px;
-      color: var(--text-muted);
-      font-family: 'DM Mono', monospace;
-    }
+    .profile-name { font-size: 14px; font-weight: 600; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .profile-jabatan { font-size: 12px; color: var(--text-muted); font-family: 'DM Mono', monospace; }
 
-    /* Utility */
-    .hidden { display: none !important; }
-    .mt-4 { margin-top: 16px; }
-
-    /* RESPONSIVE DESIGN */
     @media (max-width: 768px) {
-      /* PERUBAHAN DI SINI: order: -1 dihapus agar soal tetap di atas grid saat mode mobile */
       #examScreen { flex-direction: column; padding: 16px; gap: 16px; }
       .exam-sidebar { width: 100%; position: static; } 
       .topbar { padding: 14px 20px; }
@@ -812,8 +281,13 @@
   </style>
 </head>
 <body>
-<div class="page-wrap">
 
+<div id="cheatOverlay">
+  <h1>⚠ PELANGGARAN TERDETEKSI</h1>
+  <p>Anda mencoba meninggalkan halaman ujian atau melakukan tangkapan layar. Sistem telah mencatat aktivitas ini.</p>
+</div>
+
+<div class="page-wrap">
   <header class="topbar">
     <div class="topbar-brand">
       <div class="brand-icon">
@@ -843,15 +317,11 @@
           </div>
           <div class="rule-item">
             <div class="rule-icon green">✦</div>
-            <div class="rule-text"><strong>Sistem penilaian:</strong> Jawaban benar +5 poin. Jawaban salah atau tidak dijawab mendapat 0 poin.</div>
+            <div class="rule-text"><strong>Sistem penilaian:</strong> Jawaban benar +5 poin. Salah/Kosong 0 poin.</div>
           </div>
           <div class="rule-item">
-            <div class="rule-icon gold">🔑</div>
-            <div class="rule-text">Pastikan <strong>kode akses jabatan</strong> yang Anda masukkan sudah benar sebelum memulai.</div>
-          </div>
-          <div class="rule-item">
-            <div class="rule-icon green">✔</div>
-            <div class="rule-text">Klik tombol <strong>"Selesai & Submit"</strong> setelah selesai mengerjakan semua soal.</div>
+            <div class="rule-icon gold">🔒</div>
+            <div class="rule-text"><strong>Wajib Layar Penuh (Fullscreen)</strong>. Ujian tidak bisa dilakukan jika Anda keluar dari mode fullscreen.</div>
           </div>
         </div>
       </div>
@@ -859,7 +329,7 @@
       <div class="warning-card">
         <div class="warn-icon">⚠</div>
         <div>
-          <strong>Peringatan Anti-Kecurangan:</strong> Sistem akan mendeteksi setiap perpindahan tab atau aplikasi lain selama ujian. Pelanggaran sebanyak 3 kali akan menyebabkan ujian dihentikan dan disubmit secara otomatis.
+          <strong>Sistem Anti-Kecurangan Aktif:</strong> Dilarang merekam layar, <i>screenshot</i>, atau berpindah ke aplikasi/tab lain. Pelanggaran 3 kali akan menyebabkan ujian dihentikan otomatis.
         </div>
       </div>
 
@@ -891,7 +361,7 @@
           </div>
 
           <div class="divider"></div>
-          <button class="btn-cta" id="btnLogin" onclick="login()">Mulai Tes</button>
+          <button class="btn-cta" id="btnLogin" onclick="login()">Mulai Tes (Masuk Fullscreen)</button>
           <span class="back-link" onclick="showInfo()">← Kembali ke Panduan</span>
         </div>
       </div>
@@ -899,7 +369,6 @@
   </div>
 
   <div id="examScreen" class="screen">
-
     <div class="exam-main">
       <div class="question-card">
         <div class="q-header">
@@ -921,7 +390,6 @@
     </div>
 
     <div class="exam-sidebar">
-
       <div class="profile-chip">
         <div class="profile-avatar" id="profileAvatar">?</div>
         <div class="profile-info">
@@ -950,12 +418,8 @@
           <div class="nav-grid" id="navGrid"></div>
         </div>
         <div class="legend">
-          <div class="legend-item">
-            <div class="legend-dot green"></div> Terjawab
-          </div>
-          <div class="legend-item">
-            <div class="legend-dot dim"></div> Belum
-          </div>
+          <div class="legend-item"><div class="legend-dot green"></div> Terjawab</div>
+          <div class="legend-item"><div class="legend-dot dim"></div> Belum</div>
         </div>
       </div>
 
@@ -966,7 +430,6 @@
         Selesai & Submit
       </button>
     </div>
-
   </div>
 
   <div id="finishScreen" class="screen">
@@ -981,38 +444,22 @@
           <h2 class="finish-title">Ujian Selesai</h2>
           <p class="finish-desc">Terima kasih telah mengikuti seleksi rekrutmen outsourcing<br>Kanwil Kemenhaj Provinsi Kalimantan Utara TA 2026.</p>
         </div>
-
         <div class="score-display">
           <div class="score-label">Skor Akhir</div>
           <div class="score-number" id="skorAkhir">0</div>
         </div>
-
         <div class="detail-rows">
-          <div class="detail-row">
-            <span class="detail-key">Total soal</span>
-            <span class="detail-val" id="totalSoal">0</span>
-          </div>
-          <div class="detail-row">
-            <span class="detail-key">Soal terjawab</span>
-            <span class="detail-val green" id="soalSelesai">0</span>
-          </div>
-          <div class="detail-row">
-            <span class="detail-key">Soal kosong</span>
-            <span class="detail-val red" id="soalKosong">0</span>
-          </div>
-          <div class="detail-row">
-            <span class="detail-key">Jawaban benar</span>
-            <span class="detail-val blue" id="jawabanBenar">0</span>
-          </div>
+          <div class="detail-row"><span class="detail-key">Total soal</span><span class="detail-val" id="totalSoal">0</span></div>
+          <div class="detail-row"><span class="detail-key">Soal terjawab</span><span class="detail-val green" id="soalSelesai">0</span></div>
+          <div class="detail-row"><span class="detail-key">Soal kosong</span><span class="detail-val red" id="soalKosong">0</span></div>
+          <div class="detail-row"><span class="detail-key">Jawaban benar</span><span class="detail-val blue" id="jawabanBenar">0</span></div>
         </div>
-
         <div class="finish-actions">
           <button class="btn-exit" onclick="location.reload()">Keluar dari Sistem</button>
         </div>
       </div>
     </div>
   </div>
-
 </div>
 
 <script>
@@ -1024,8 +471,11 @@
   let timer;
   let sisaWaktu = 100 * 60;
   let profile = {};
+  
+  // Variabel Sistem Anti Curang
   let peringatanCurang = 0;
   let ujianAktif = false;
+  const overlay = document.getElementById('cheatOverlay');
 
   function showScreen(id) {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -1033,8 +483,15 @@
   }
 
   function showInfo() { showScreen('infoScreen'); }
-
   function showLogin() { showScreen('loginScreen'); }
+
+  // Fungsi memaksa layar penuh (Fullscreen)
+  async function requestFullscreen() {
+    const doc = document.documentElement;
+    if (doc.requestFullscreen) { await doc.requestFullscreen(); } 
+    else if (doc.webkitRequestFullscreen) { await doc.webkitRequestFullscreen(); } 
+    else if (doc.msRequestFullscreen) { await doc.msRequestFullscreen(); }
+  }
 
   function formatTanggalIndo(text) {
     if (!text || typeof text !== 'string') return text;
@@ -1064,6 +521,10 @@
   async function login() {
     const btn = document.getElementById('btnLogin');
     const errBox = document.getElementById('errorBox');
+    
+    // Minta Fullscreen saat tombol login ditekan (Syarat Browser)
+    try { await requestFullscreen(); } catch(e) { console.log("Gagal memuat fullscreen otomatis"); }
+
     btn.disabled = true;
     btn.innerText = "Menghubungkan ke server...";
     errBox.style.display = 'none';
@@ -1079,7 +540,7 @@
       errBox.innerText = "Lengkapi Nama, NIK, dan Kode Akses Jabatan.";
       errBox.style.display = 'block';
       btn.disabled = false;
-      btn.innerText = "Mulai Tes";
+      btn.innerText = "Mulai Tes (Masuk Fullscreen)";
       return;
     }
 
@@ -1096,7 +557,7 @@
       errBox.innerText = err.message || "Gagal terhubung ke server.";
       errBox.style.display = 'block';
       btn.disabled = false;
-      btn.innerText = "Mulai Tes";
+      btn.innerText = "Mulai Tes (Masuk Fullscreen)";
     }
   }
 
@@ -1132,8 +593,7 @@
 
   function renderSoal() {
     const s = dataUjian[currentIdx];
-    document.getElementById('qNum').innerText =
-      String(currentIdx + 1).padStart(2, '0') + ' / ' + String(dataUjian.length).padStart(2, '0');
+    document.getElementById('qNum').innerText = String(currentIdx + 1).padStart(2, '0') + ' / ' + String(dataUjian.length).padStart(2, '0');
     document.getElementById('qCat').innerText = s.kategori || "Umum";
     document.getElementById('qText').innerText = s.soal;
 
@@ -1189,6 +649,9 @@
   async function prosesSubmit() {
     ujianAktif = false;
     clearInterval(timer);
+    // Matikan overlay jika menyala
+    overlay.style.display = 'none';
+
     const btn = document.getElementById('btnSubmit');
     btn.disabled = true;
     btn.innerHTML = 'Mengirim...';
@@ -1201,9 +664,7 @@
     try {
       const res = await callAPI("submit", payload);
       if (res.status === "success") {
-        alert("Berhasil! Jawaban Anda telah diterima.");
         localStorage.removeItem('jawabanCAT_' + profile.nik);
-
         const total = dataUjian.length;
         const terjawab = Object.keys(jawabanUser).length;
         const skor = res.data.skor || 0;
@@ -1214,28 +675,93 @@
         document.getElementById('jawabanBenar').innerText = (skor / 5) + " soal";
         document.getElementById('skorAkhir').innerText = skor;
 
+        // Keluar dari Fullscreen saat ujian selesai
+        if (document.exitFullscreen) { document.exitFullscreen(); }
+
         showScreen('finishScreen');
       } else throw new Error(res.message);
     } catch (err) {
       alert("Error: " + err.message + "\nData tersimpan di browser. Coba submit lagi.");
       btn.disabled = false;
-      btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Selesai & Submit`;
+      btn.innerHTML = `Selesai & Submit`;
       ujianAktif = true;
     }
   }
 
-  // Anti-cheat
-  document.addEventListener("visibilitychange", () => {
-    if (document.hidden && ujianAktif) {
-      peringatanCurang++;
+
+  /* ==========================================
+     SISTEM KEAMANAN & ANTI CURANG (CLIENT SIDE)
+     ========================================== */
+
+  // 1. Eksekusi Hukuman Pelanggaran
+  function catatPelanggaran(alasan) {
+    if (!ujianAktif) return;
+    peringatanCurang++;
+    
+    // Tampilkan overlay hitam secepat mungkin
+    overlay.style.display = 'flex';
+
+    // Beri jeda kecil agar overlay sempat ter-render sebelum alert memblokir proses
+    setTimeout(() => {
       if (peringatanCurang >= 3) {
-        alert("PELANGGARAN FATAL! Anda telah keluar dari layar ujian 3 kali. Ujian dihentikan otomatis.");
+        alert(`PELANGGARAN FATAL: ${alasan}!\nBatas pelanggaran telah tercapai (3/3). Ujian dihentikan dan disubmit otomatis.`);
         prosesSubmit();
       } else {
-        alert(`PERINGATAN (${peringatanCurang}/3): Sistem mendeteksi Anda meninggalkan halaman ujian.`);
+        alert(`PERINGATAN (${peringatanCurang}/3): ${alasan}.\nHarap kembali ke halaman ujian!`);
+        // Jika kembali fokus, sembunyikan overlay
+        overlay.style.display = 'none';
+      }
+    }, 200);
+  }
+
+  // 2. Deteksi Keluar dari Fullscreen
+  document.addEventListener('fullscreenchange', () => {
+    if (!document.fullscreenElement && ujianAktif) {
+      catatPelanggaran("Anda keluar dari mode Layar Penuh");
+    }
+  });
+
+  // 3. Deteksi Pindah Tab (Visibility) & Screenshot/Recent Apps (Blur)
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden && ujianAktif) {
+      catatPelanggaran("Sistem mendeteksi perpindahan tab atau aplikasi");
+    }
+  });
+
+  window.addEventListener("blur", () => {
+    if (ujianAktif) {
+      // Langsung munculkan layar hitam saat blur (Untuk menangkal screenshot)
+      overlay.style.display = 'flex';
+      catatPelanggaran("Layar kehilangan fokus / Membuka notifikasi");
+    }
+  });
+
+  window.addEventListener("focus", () => {
+    if (ujianAktif) { overlay.style.display = 'none'; }
+  });
+
+  // 4. Blokir Klik Kanan (Context Menu)
+  document.addEventListener('contextmenu', event => {
+    if(ujianAktif) event.preventDefault();
+  });
+
+  // 5. Blokir Tombol Shortcut Tertentu (Ctrl+C, Ctrl+V, Print, Inspect Element)
+  document.addEventListener('keydown', event => {
+    if (!ujianAktif) return;
+    
+    // Cegah F12
+    if (event.key === 'F12') {
+      event.preventDefault();
+    }
+    // Cegah kombinasi Ctrl
+    if (event.ctrlKey) {
+      const forbiddenKeys = ['c', 'v', 'x', 'p', 's', 'u', 'i', 'j'];
+      if (forbiddenKeys.includes(event.key.toLowerCase())) {
+        event.preventDefault();
       }
     }
   });
+
 </script>
 </body>
 </html>
