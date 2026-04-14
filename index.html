@@ -3,152 +3,1013 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portal Seleksi Rekrutmen Kanwil Kemenhaj Kaltara TA 2026</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <title>Portal Seleksi — Kanwil Kemenhaj Kaltara 2026</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    body { 
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); 
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-        min-height: 100vh;
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      /* LIGHT MODE COLOR PALETTE */
+      --bg: #f4f7fb;              
+      --bg-card: #ffffff;         
+      --bg-elevated: #f8fafc;     
+      --bg-input: #ffffff;        
+      --border: #e2e8f0;          
+      --border-hover: #cbd5e1;    
+      --border-accent: rgba(37, 99, 235, 0.4); 
+      
+      --text-primary: #0f172a;    
+      --text-secondary: #475569;  
+      --text-muted: #64748b;      
+      
+      --accent: #2563eb;          
+      --accent-dim: rgba(37, 99, 235, 0.08);
+      --accent-glow: rgba(37, 99, 235, 0.15);
+      
+      --success: #16a34a;         
+      --success-dim: rgba(22, 163, 74, 0.1);
+      
+      --danger: #dc2626;          
+      --danger-dim: rgba(220, 38, 38, 0.1);
+      
+      --warning: #d97706;         
+      --warning-dim: rgba(217, 119, 6, 0.1);
+      
+      --gold: #ca8a04;            
+      --gold-dim: rgba(202, 138, 4, 0.1);
     }
-    .card { 
-        border: none; 
-        border-radius: 20px; 
-        box-shadow: 0 10px 30px rgba(0,0,0,0.08); 
-        background: #ffffff; 
+
+    body {
+      background: var(--bg);
+      color: var(--text-primary);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      line-height: 1.6;
+      overflow-x: hidden;
     }
-    .header-title { color: #2c3e50; font-weight: 800; letter-spacing: -0.5px; }
-    .form-control { border-radius: 12px; padding: 14px; border: 1px solid #e0e0e0; background-color: #fcfcfc;}
-    .form-control:focus { box-shadow: 0 0 0 0.25rem rgba(0,102,204,0.15); border-color: #0066cc; background-color: #fff;}
-    .btn-primary { background-color: #0066cc; border: none; padding: 12px 20px; border-radius: 12px; font-weight: 600; transition: all 0.3s; }
-    .btn-primary:hover { background-color: #0052a3; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,102,204,0.3); }
-    .btn-success { background-color: #20c997; border: none; font-weight: 600; border-radius: 12px;}
-    .nav-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(45px, 1fr)); gap: 8px; }
-    .btn-nav { width: 100%; height: 45px; font-size: 14px; font-weight: 600; border-radius: 10px; transition: all 0.2s;}
-    .btn-nav.active-nav { border: 2px solid #2c3e50; transform: scale(1.1); box-shadow: 0 3px 8px rgba(0,0,0,0.15); z-index: 2;}
-    .opsi-btn { 
-        display: block; width: 100%; text-align: left; 
-        border-radius: 12px; padding: 14px 20px; 
-        border: 1px solid #dce1e6; color: #495057; 
-        background: #fff; transition: all 0.2s ease-in-out; 
-        margin-bottom: 10px; cursor: pointer; text-decoration: none;
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% -10%, rgba(37, 99, 235, 0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 90% 80%, rgba(22, 163, 74, 0.04) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
     }
-    .opsi-btn:hover { background: #f8f9fa; border-color: #b0b8c1; }
-    .opsi-btn.selected { background: #e6f2ff; border-color: #0066cc; color: #0052a3; box-shadow: 0 0 0 1px #0066cc; }
-    #timer { font-size: 1.5rem; font-weight: 800; color: #e74c3c; background: #fde8e7; padding: 5px 15px; border-radius: 10px; letter-spacing: 1px;}
+
+    .page-wrap {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+    }
+
+    /* ── TOP BAR ── */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 32px;
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(20px);
+      background: rgba(255, 255, 255, 0.85); 
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .topbar-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand-icon {
+      width: 32px; height: 32px;
+      background: linear-gradient(135deg, var(--accent), #60a5fa);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .brand-icon svg { width: 18px; height: 18px; }
+    .brand-name {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      letter-spacing: 0.02em;
+    }
+    .brand-name span { color: var(--text-primary); font-weight: 600; }
+    .topbar-badge {
+      font-size: 11px;
+      font-family: 'DM Mono', monospace;
+      color: var(--accent);
+      background: var(--accent-dim);
+      border: 1px solid var(--border-accent);
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── SCREEN SYSTEM ── */
+    .screen { display: none; }
+    .screen.active { display: flex; }
+
+    /* ── SCREEN: INFO ── */
+    #infoScreen {
+      min-height: calc(100vh - 65px);
+      align-items: center;
+      justify-content: center;
+      padding: 48px 16px;
+    }
+    .info-container {
+      width: 100%;
+      max-width: 640px;
+    }
+    .info-hero {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .info-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-family: 'DM Mono', monospace;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      background: var(--accent-dim);
+      border: 1px solid var(--border-accent);
+      padding: 5px 12px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+    .info-eyebrow::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(0.8); }
+    }
+    .info-title {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+    .info-subtitle {
+      font-size: 15px;
+      color: var(--text-secondary);
+      font-weight: 400;
+    }
+
+    .rules-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    }
+    .rules-header {
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
+      font-family: 'DM Mono', monospace;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      background: var(--bg-elevated);
+    }
+    .rules-body {
+      padding: 8px 0;
+    }
+    .rule-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 14px 24px;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s;
+    }
+    .rule-item:last-child { border-bottom: none; }
+    .rule-item:hover { background: var(--bg-elevated); }
+    .rule-icon {
+      width: 28px; height: 28px;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      font-size: 13px;
+      margin-top: 1px;
+    }
+    .rule-icon.blue { background: var(--accent-dim); color: var(--accent); }
+    .rule-icon.green { background: var(--success-dim); color: var(--success); }
+    .rule-icon.red { background: var(--danger-dim); color: var(--danger); }
+    .rule-icon.gold { background: var(--gold-dim); color: var(--gold); }
+    .rule-text {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+    .rule-text strong { color: var(--text-primary); font-weight: 600; }
+
+    .warning-card {
+      background: var(--danger-dim);
+      border: 1px solid rgba(220,38,38,0.2);
+      border-radius: 12px;
+      padding: 14px 20px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 24px;
+      font-size: 13px;
+      color: var(--danger);
+      line-height: 1.5;
+    }
+    .warning-card .warn-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+
+    .btn-cta {
+      width: 100%;
+      padding: 16px;
+      background: var(--accent);
+      color: #ffffff;
+      border: none;
+      border-radius: 12px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 4px 12px var(--accent-glow);
+    }
+    .btn-cta:hover { background: #1d4ed8; transform: translateY(-1px); }
+    .btn-cta:active { transform: translateY(0); }
+    .btn-cta:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* ── SCREEN: LOGIN ── */
+    #loginScreen {
+      min-height: calc(100vh - 65px);
+      align-items: center;
+      justify-content: center;
+      padding: 48px 16px;
+    }
+    .login-container {
+      width: 100%;
+      max-width: 420px;
+    }
+    .login-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+    }
+    .login-header {
+      padding: 28px 28px 0;
+      text-align: center;
+    }
+    .login-header h2 {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+    }
+    .login-header p {
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+    .login-body { padding: 24px 28px 28px; }
+    .field-group { margin-bottom: 16px; }
+    .field-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    .field-input {
+      width: 100%;
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      color: var(--text-primary);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+    .field-input::placeholder { color: #94a3b8; }
+    .field-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .field-input.code-input {
+      font-family: 'DM Mono', monospace;
+      font-size: 16px;
+      letter-spacing: 0.1em;
+      text-align: center;
+    }
+    .error-box {
+      background: var(--danger-dim);
+      border: 1px solid rgba(220,38,38,0.25);
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 13px;
+      color: var(--danger);
+      margin-bottom: 16px;
+      display: none;
+    }
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 24px 0;
+    }
+    .back-link {
+      display: block;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+      cursor: pointer;
+      margin-top: 16px;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--accent); }
+
+    /* ── SCREEN: EXAM ── */
+    #examScreen {
+      min-height: calc(100vh - 65px);
+      align-items: flex-start;
+      padding: 32px 24px;
+      gap: 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .exam-main { flex: 1; min-width: 0; }
+    .exam-sidebar {
+      width: 300px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 90px;
+    }
+
+    .question-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+    .q-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 28px;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-elevated);
+    }
+    .q-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .q-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+      letter-spacing: 0.05em;
+    }
+    .q-cat {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-dim);
+      border: 1px solid var(--border-accent);
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+    .timer-display {
+      font-family: 'DM Mono', monospace;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text-primary);
+      letter-spacing: 0.08em;
+      padding: 6px 14px;
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      transition: color 0.3s, background 0.3s, border-color 0.3s;
+    }
+    .timer-display.urgent {
+      color: var(--danger);
+      background: #fee2e2;
+      border-color: rgba(220,38,38,0.3);
+      animation: timerPulse 1s infinite;
+    }
+
+    .q-body { padding: 32px 28px; }
+    .q-text {
+      font-size: 17px;
+      line-height: 1.7;
+      color: var(--text-primary);
+      margin-bottom: 32px;
+      font-weight: 400;
+    }
+
+    .options-list { display: flex; flex-direction: column; gap: 12px; }
+    .option-btn {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 16px 20px;
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.15s;
+      text-align: left;
+      width: 100%;
+      font-family: 'DM Sans', sans-serif;
+      color: var(--text-secondary);
+      font-size: 15px;
+      line-height: 1.5;
+    }
+    .option-btn:hover {
+      border-color: var(--accent);
+      background: var(--bg-elevated);
+      color: var(--text-primary);
+    }
+    .option-btn.selected {
+      background: var(--accent-dim);
+      border-color: var(--accent);
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+    .option-btn.selected .opt-label {
+      background: var(--accent);
+      color: #ffffff;
+      border-color: transparent;
+    }
+    .opt-label {
+      width: 28px; height: 28px;
+      border-radius: 7px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: 'DM Mono', monospace;
+      flex-shrink: 0;
+      color: var(--text-muted);
+      transition: all 0.15s;
+    }
+    .opt-text { padding-top: 3px; }
+
+    .q-footer {
+      display: flex;
+      justify-content: space-between;
+      padding: 18px 28px;
+      border-top: 1px solid var(--border);
+      background: var(--bg-elevated);
+      gap: 12px;
+    }
+    .btn-nav-q {
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      border: 1px solid var(--border);
+    }
+    .btn-prev {
+      background: var(--bg-input);
+      color: var(--text-secondary);
+    }
+    .btn-prev:hover { border-color: var(--text-muted); color: var(--text-primary); }
+    .btn-next {
+      background: var(--accent);
+      color: #ffffff;
+      border-color: transparent;
+      flex: 1;
+      max-width: 180px;
+    }
+    .btn-next:hover { background: #1d4ed8; }
+
+    /* Sidebar */
+    .sidebar-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+    .sidebar-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
+      font-weight: 600;
+      font-family: 'DM Mono', monospace;
+      letter-spacing: 0.05em;
+      color: var(--text-primary);
+      background: var(--bg-elevated);
+      text-transform: uppercase;
+    }
+    .sidebar-body { padding: 20px; }
+    .nav-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+    }
+    .nav-btn {
+      aspect-ratio: 1;
+      border-radius: 8px;
+      font-size: 12px;
+      font-family: 'DM Mono', monospace;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      border: 1px solid var(--border);
+      background: var(--bg-input);
+      color: var(--text-secondary);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .nav-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .nav-btn.answered {
+      background: var(--success-dim);
+      border-color: rgba(22,163,74,0.3);
+      color: var(--success);
+    }
+    .nav-btn.current {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #ffffff;
+      box-shadow: 0 0 0 3px var(--accent-dim);
+    }
+
+    .legend {
+      display: flex;
+      gap: 16px;
+      padding: 14px 20px;
+      border-top: 1px solid var(--border);
+      background: var(--bg-elevated);
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+    .legend-dot {
+      width: 10px; height: 10px;
+      border-radius: 3px;
+    }
+    .legend-dot.green { background: var(--success); }
+    .legend-dot.dim { background: #cbd5e1; }
+
+    /* Stats in sidebar */
+    .stats-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      padding: 20px;
+    }
+    .stat-item {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+      text-align: center;
+    }
+    .stat-val {
+      font-size: 24px;
+      font-weight: 700;
+      font-family: 'DM Mono', monospace;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .stat-val.green { color: var(--success); }
+    .stat-val.muted { color: var(--text-muted); }
+    .stat-label { font-size: 12px; font-weight: 500; color: var(--text-secondary); }
+
+    .btn-submit {
+      width: 100%;
+      padding: 16px;
+      background: var(--success);
+      color: #ffffff;
+      border: none;
+      border-radius: 12px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 4px 12px rgba(22, 163, 74, 0.2);
+    }
+    .btn-submit:hover { background: #15803d; transform: translateY(-1px); }
+    .btn-submit:active { transform: translateY(0); }
+    .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; }
+
+    /* ── SCREEN: FINISH ── */
+    #finishScreen {
+      min-height: calc(100vh - 65px);
+      align-items: center;
+      justify-content: center;
+      padding: 48px 16px;
+    }
+    .finish-container {
+      width: 100%;
+      max-width: 520px;
+    }
+    .finish-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+    }
+    .finish-top {
+      padding: 40px 32px 28px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+    .finish-icon {
+      width: 64px; height: 64px;
+      border-radius: 16px;
+      background: var(--success-dim);
+      border: 1px solid rgba(22,163,74,0.25);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px;
+    }
+    .finish-icon svg { width: 32px; height: 32px; stroke: var(--success); }
+    .finish-title {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+    .finish-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .score-display {
+      padding: 32px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-elevated);
+    }
+    .score-label {
+      font-size: 12px;
+      font-weight: 600;
+      font-family: 'DM Mono', monospace;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+    .score-number {
+      font-size: 80px;
+      font-weight: 700;
+      font-family: 'DM Mono', monospace;
+      color: var(--accent);
+      letter-spacing: -0.04em;
+      line-height: 1;
+    }
+
+    .detail-rows { padding: 12px 0; }
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 32px;
+      border-bottom: 1px solid var(--border);
+    }
+    .detail-row:last-child { border-bottom: none; }
+    .detail-key {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+    .detail-val {
+      font-size: 15px;
+      font-weight: 600;
+      font-family: 'DM Mono', monospace;
+      color: var(--text-primary);
+    }
+    .detail-val.green { color: var(--success); }
+    .detail-val.red { color: var(--danger); }
+    .detail-val.blue { color: var(--accent); }
+
+    .finish-actions {
+      padding: 24px 32px;
+      border-top: 1px solid var(--border);
+      background: var(--bg-elevated);
+    }
+    .btn-exit {
+      width: 100%;
+      padding: 14px;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: var(--text-primary);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-exit:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--bg-elevated);
+    }
+
+    /* Profile chip on exam screen */
+    .profile-chip {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+    .profile-avatar {
+      width: 36px; height: 36px;
+      border-radius: 10px;
+      background: var(--accent-dim);
+      border: 1px solid rgba(37,99,235,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--accent);
+      font-family: 'DM Mono', monospace;
+      flex-shrink: 0;
+    }
+    .profile-info { flex: 1; min-width: 0; }
+    .profile-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .profile-jabatan {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-family: 'DM Mono', monospace;
+    }
+
+    /* Utility */
     .hidden { display: none !important; }
-    .info-list li { margin-bottom: 12px; font-size: 1.05rem; }
+    .mt-4 { margin-top: 16px; }
+
+    /* RESPONSIVE DESIGN */
+    @media (max-width: 768px) {
+      /* PERUBAHAN DI SINI: order: -1 dihapus agar soal tetap di atas grid saat mode mobile */
+      #examScreen { flex-direction: column; padding: 16px; gap: 16px; }
+      .exam-sidebar { width: 100%; position: static; } 
+      .topbar { padding: 14px 20px; }
+      .info-title { font-size: 26px; }
+      .q-header { flex-direction: column; align-items: flex-start; gap: 12px; padding: 16px; }
+      .q-body { padding: 20px 16px; }
+      .q-text { font-size: 15px; }
+      .option-btn { font-size: 14px; padding: 14px 16px; }
+    }
   </style>
 </head>
 <body>
-<div class="container py-5">
-  
-  <div id="infoScreen" class="row justify-content-center">
-    <div class="col-md-7">
-      <div class="card p-5">
-        <div class="text-center mb-4">
-            <h4 class="header-title mb-1">Panduan Pelaksanaan Seleksi</h4>
-            <p class="text-muted">Kanwil Kemenhaj Kaltara TA 2026</p>
+<div class="page-wrap">
+
+  <header class="topbar">
+    <div class="topbar-brand">
+      <div class="brand-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+        </svg>
+      </div>
+      <div class="brand-name"><span>Kemenhaj</span> · Kanwil Kaltara</div>
+    </div>
+    <div class="topbar-badge">TA 2026</div>
+  </header>
+
+  <div id="infoScreen" class="screen active">
+    <div class="info-container">
+      <div class="info-hero">
+        <div class="info-eyebrow">Seleksi Rekrutmen Outsourcing</div>
+        <h1 class="info-title">Panduan Pelaksanaan<br>Ujian CAT</h1>
+        <p class="info-subtitle">Baca dan pahami seluruh ketentuan sebelum memulai tes</p>
+      </div>
+
+      <div class="rules-card">
+        <div class="rules-header">Tata Tertib & Ketentuan</div>
+        <div class="rules-body">
+          <div class="rule-item">
+            <div class="rule-icon blue">⏱</div>
+            <div class="rule-text">Durasi pengerjaan <strong>100 menit</strong>. Ujian otomatis disubmit saat waktu habis.</div>
+          </div>
+          <div class="rule-item">
+            <div class="rule-icon green">✦</div>
+            <div class="rule-text"><strong>Sistem penilaian:</strong> Jawaban benar +5 poin. Jawaban salah atau tidak dijawab mendapat 0 poin.</div>
+          </div>
+          <div class="rule-item">
+            <div class="rule-icon gold">🔑</div>
+            <div class="rule-text">Pastikan <strong>kode akses jabatan</strong> yang Anda masukkan sudah benar sebelum memulai.</div>
+          </div>
+          <div class="rule-item">
+            <div class="rule-icon green">✔</div>
+            <div class="rule-text">Klik tombol <strong>"Selesai & Submit"</strong> setelah selesai mengerjakan semua soal.</div>
+          </div>
         </div>
-        <div class="alert alert-info">
-            <h6 class="fw-bold mb-3">Tata Cara & Aturan Tes:</h6>
-            <ul class="info-list mb-0">
-                <li>Durasi pengerjaan adalah <strong>100 Menit</strong>.</li>
-                <li><strong>Sistem Penilaian:</strong> Jawaban benar mendapat poin 5, salah atau tidak menjawab mendapat 0.</li>
-                <li>Pastikan mengisi kode akses jabatan dengan benar.</li>
-                <li><strong>PERINGATAN:</strong> Sistem dilengkapi deteksi anti-kecurangan. Anda dilarang membuka tab/aplikasi lain selama ujian berlangsung. Pelanggaran 3x akan membuat ujian otomatis disubmit.</li>
-                <li>Pastikan klik tombol <strong>"Selesai & Submit"</strong> sebelum waktu habis.</li>
-            </ul>
+      </div>
+
+      <div class="warning-card">
+        <div class="warn-icon">⚠</div>
+        <div>
+          <strong>Peringatan Anti-Kecurangan:</strong> Sistem akan mendeteksi setiap perpindahan tab atau aplikasi lain selama ujian. Pelanggaran sebanyak 3 kali akan menyebabkan ujian dihentikan dan disubmit secara otomatis.
         </div>
-        <button onclick="showLogin()" class="btn btn-primary w-100 py-3 mt-3">ISI DATA PESERTA</button>
+      </div>
+
+      <button class="btn-cta" onclick="showLogin()">Isi Data Peserta →</button>
+    </div>
+  </div>
+
+  <div id="loginScreen" class="screen">
+    <div class="login-container">
+      <div class="login-card">
+        <div class="login-header">
+          <h2>Pendaftaran Ujian</h2>
+          <p>Lengkapi data diri Anda dengan benar</p>
+        </div>
+        <div class="login-body">
+          <div id="errorBox" class="error-box"></div>
+
+          <div class="field-group">
+            <label class="field-label">Nama Lengkap</label>
+            <input type="text" id="nama" class="field-input" placeholder="Masukkan nama sesuai KTP">
+          </div>
+          <div class="field-group">
+            <label class="field-label">NIK (KTP)</label>
+            <input type="text" id="nik" class="field-input" placeholder="16 digit NIK">
+          </div>
+          <div class="field-group">
+            <label class="field-label">Kode Akses Jabatan</label>
+            <input type="text" id="kode" class="field-input code-input" placeholder="—  —  —  —">
+          </div>
+
+          <div class="divider"></div>
+          <button class="btn-cta" id="btnLogin" onclick="login()">Mulai Tes</button>
+          <span class="back-link" onclick="showInfo()">← Kembali ke Panduan</span>
+        </div>
       </div>
     </div>
   </div>
 
-  <div id="loginScreen" class="row justify-content-center hidden">
-    <div class="col-md-5">
-      <div class="card p-5">
-        <div class="text-center mb-4">
-            <h4 class="header-title mb-1">Pendaftaran Ujian</h4>
-            <p class="text-muted small">Lengkapi data diri Anda dengan benar</p>
-        </div>
-        
-        <div id="errorAlert" class="alert alert-danger hidden" role="alert" style="border-radius: 10px;"></div>
+  <div id="examScreen" class="screen">
 
-        <div class="mb-3">
-            <input type="text" id="nama" class="form-control" placeholder="Nama Lengkap">
+    <div class="exam-main">
+      <div class="question-card">
+        <div class="q-header">
+          <div class="q-meta">
+            <span class="q-num" id="qNum">01 / 00</span>
+            <span class="q-cat" id="qCat">Kategori</span>
+          </div>
+          <div id="timerDisplay" class="timer-display">100:00</div>
         </div>
-        <div class="mb-3">
-            <input type="text" id="nik" class="form-control" placeholder="NIK (KTP)">
+        <div class="q-body">
+          <p class="q-text" id="qText"></p>
+          <div class="options-list" id="optionsList"></div>
         </div>
-        <div class="mb-4">
-            <input type="text" id="kode" class="form-control" placeholder="Kode Akses Jabatan">
+        <div class="q-footer">
+          <button class="btn-nav-q btn-prev" onclick="nav(-1)">← Kembali</button>
+          <button class="btn-nav-q btn-next" onclick="nav(1)">Lanjut →</button>
         </div>
-        
-        <button onclick="login()" id="btnLogin" class="btn btn-primary w-100">MULAI TES</button>
       </div>
     </div>
+
+    <div class="exam-sidebar">
+
+      <div class="profile-chip">
+        <div class="profile-avatar" id="profileAvatar">?</div>
+        <div class="profile-info">
+          <div class="profile-name" id="profileName">—</div>
+          <div class="profile-jabatan" id="profileJabatan">—</div>
+        </div>
+      </div>
+
+      <div class="sidebar-card">
+        <div class="sidebar-header">Progress</div>
+        <div class="stats-row">
+          <div class="stat-item">
+            <div class="stat-val green" id="statAnswered">0</div>
+            <div class="stat-label">Terjawab</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-val muted" id="statEmpty">0</div>
+            <div class="stat-label">Kosong</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-card">
+        <div class="sidebar-header">Navigasi Soal</div>
+        <div class="sidebar-body">
+          <div class="nav-grid" id="navGrid"></div>
+        </div>
+        <div class="legend">
+          <div class="legend-item">
+            <div class="legend-dot green"></div> Terjawab
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot dim"></div> Belum
+          </div>
+        </div>
+      </div>
+
+      <button class="btn-submit" id="btnSubmit" onclick="finish()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+        Selesai & Submit
+      </button>
+    </div>
+
   </div>
 
-  <div id="examScreen" class="row hidden">
-    <div class="col-md-8">
-      <div class="card p-4 mb-4">
-        <div class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-4">
-          <span id="labelKategori" class="badge bg-secondary px-3 py-2" style="border-radius: 8px;">Kategori</span>
-          <span id="timer">100:00</span>
+  <div id="finishScreen" class="screen">
+    <div class="finish-container">
+      <div class="finish-card">
+        <div class="finish-top">
+          <div class="finish-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+            </svg>
+          </div>
+          <h2 class="finish-title">Ujian Selesai</h2>
+          <p class="finish-desc">Terima kasih telah mengikuti seleksi rekrutmen outsourcing<br>Kanwil Kemenhaj Provinsi Kalimantan Utara TA 2026.</p>
         </div>
-        <div id="kontenSoal" class="mb-4">
-          <h5 id="noSoal" class="header-title mb-3">Soal ke-1</h5>
-          <p id="teksSoal" class="lead" style="font-size: 1.15rem; line-height: 1.6;"></p>
-          <div id="opsiJawaban" class="mt-4"></div>
-        </div>
-        <div class="d-flex justify-content-between border-top pt-4">
-          <button onclick="nav(-1)" class="btn btn-light border px-4">Kembali</button>
-          <button onclick="nav(1)" class="btn btn-primary px-4">Lanjut</button>
-        </div>
-      </div>
-    </div>
-    
-    <div class="col-md-4">
-      <div class="card p-4 sticky-top" style="top: 20px;">
-        <h6 class="header-title mb-3 text-center border-bottom pb-2">Navigasi Soal</h6>
-        <div id="gridNav" class="nav-grid mb-4"></div>
-        <button onclick="finish()" id="btnSubmit" class="btn btn-success w-100 py-3">Selesai & Submit Nilai</button>
-      </div>
-    </div>
-  </div>
 
-  <div id="finishScreen" class="text-center hidden py-5">
-    <div class="card p-5 mx-auto" style="max-width: 600px;">
-      <div class="mb-4">
-          <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#20c997" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-      </div>
-      <h2 class="text-success header-title mb-3">Hasil Ujian</h2>
-      <p class="text-muted lead mb-4">
-        Terima kasih telah mengikuti seleksi rekrutmen outsourcing Kanwil Kementerian Haji dan Umrah Provinsi Kalimantan Utara Tahun Anggaran 2026.
-      </p>
-      
-      <div class="text-start bg-light p-4 rounded-4 mb-4">
-        <h6 class="text-center mb-3 text-secondary border-bottom pb-2">Rincian Pengerjaan:</h6>
-        <div class="d-flex justify-content-between border-bottom pb-2 mb-2">
-          <span>Total Soal:</span> <strong id="totalSoal">0</strong>
+        <div class="score-display">
+          <div class="score-label">Skor Akhir</div>
+          <div class="score-number" id="skorAkhir">0</div>
         </div>
-        <div class="d-flex justify-content-between border-bottom pb-2 mb-2">
-          <span>Soal Terjawab:</span> <strong id="soalSelesai" class="text-success">0</strong>
-        </div>
-        <div class="d-flex justify-content-between border-bottom pb-2 mb-2">
-          <span>Soal Kosong:</span> <strong id="soalKosong" class="text-danger">0</strong>
-        </div>
-        <div class="d-flex justify-content-between pt-1">
-          <span class="fw-bold text-primary">Jawaban Benar:</span> 
-          <strong id="jawabanBenar" class="text-primary fs-5">0</strong>
-        </div>
-      </div>
 
-      <p class="mb-1 text-secondary">Skor Akhir Anda:</p>
-      <h1 id="skorAkhir" class="display-1 text-primary fw-bold mb-5">0</h1>
-      
-      <button onclick="location.reload()" class="btn btn-secondary w-100 py-3">Keluar Sistem</button>
+        <div class="detail-rows">
+          <div class="detail-row">
+            <span class="detail-key">Total soal</span>
+            <span class="detail-val" id="totalSoal">0</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-key">Soal terjawab</span>
+            <span class="detail-val green" id="soalSelesai">0</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-key">Soal kosong</span>
+            <span class="detail-val red" id="soalKosong">0</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-key">Jawaban benar</span>
+            <span class="detail-val blue" id="jawabanBenar">0</span>
+          </div>
+        </div>
+
+        <div class="finish-actions">
+          <button class="btn-exit" onclick="location.reload()">Keluar dari Sistem</button>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -163,76 +1024,63 @@
   let timer;
   let sisaWaktu = 100 * 60;
   let profile = {};
-  
-  // Variabel untuk fitur Anti-Cheat
   let peringatanCurang = 0;
   let ujianAktif = false;
 
-  function showLogin() {
-      document.getElementById('infoScreen').classList.add('hidden');
-      document.getElementById('loginScreen').classList.remove('hidden');
+  function showScreen(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
   }
 
-  // Helper: Fungsi Pengubah Format Tanggal (Dari 17/08/1945 atau format sheet ke Teks Indo)
+  function showInfo() { showScreen('infoScreen'); }
+
+  function showLogin() { showScreen('loginScreen'); }
+
   function formatTanggalIndo(text) {
-      if (!text || typeof text !== 'string') return text;
-      
-      const bulanIndo = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
-      const regexDMY = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/;
-      const regexYMD = /^(\d{4})-(\d{1,2})-(\d{1,2})/; 
-
-      let d, m, y;
-
-      if (regexDMY.test(text)) {
-          const match = text.match(regexDMY);
-          d = parseInt(match[1], 10);
-          m = parseInt(match[2], 10) - 1;
-          y = parseInt(match[3], 10);
-      } else if (regexYMD.test(text) && !isNaN(Date.parse(text))) {
-          const dateObj = new Date(text);
-          d = dateObj.getDate();
-          m = dateObj.getMonth();
-          y = dateObj.getFullYear();
-      } else {
-          return text;
-      }
-
-      if (m >= 0 && m < 12) {
-          return `${d} ${bulanIndo[m]} ${y}`;
-      }
-      return text;
+    if (!text || typeof text !== 'string') return text;
+    const bulanIndo = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+    const r1 = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/;
+    const r2 = /^(\d{4})-(\d{1,2})-(\d{1,2})/;
+    let d, m, y;
+    if (r1.test(text)) {
+      const mx = text.match(r1);
+      d = parseInt(mx[1]); m = parseInt(mx[2]) - 1; y = parseInt(mx[3]);
+    } else if (r2.test(text) && !isNaN(Date.parse(text))) {
+      const dt = new Date(text);
+      d = dt.getDate(); m = dt.getMonth(); y = dt.getFullYear();
+    } else return text;
+    return m >= 0 && m < 12 ? `${d} ${bulanIndo[m]} ${y}` : text;
   }
 
   async function callAPI(action, payloadData) {
-    const response = await fetch(API_URL, {
+    const r = await fetch(API_URL, {
       method: "POST",
-      headers: { "Content-Type": "text/plain;charset=utf-8" }, 
-      body: JSON.stringify({ action: action, payload: payloadData })
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify({ action, payload: payloadData })
     });
-    return await response.json();
+    return await r.json();
   }
 
   async function login() {
     const btn = document.getElementById('btnLogin');
-    const alertBox = document.getElementById('errorAlert');
-    
-    btn.disabled = true; 
-    btn.innerText = "Mendapatkan Soal... Mohon Tunggu";
-    alertBox.classList.add('hidden');
-    
+    const errBox = document.getElementById('errorBox');
+    btn.disabled = true;
+    btn.innerText = "Menghubungkan ke server...";
+    errBox.style.display = 'none';
+
     profile = {
       nama: (document.getElementById('nama').value || "").trim(),
       nik: (document.getElementById('nik').value || "").trim(),
       kode: (document.getElementById('kode').value || "").trim(),
-      konfirmasi: "mulai tes" 
+      konfirmasi: "mulai tes"
     };
 
-    if(!profile.nama || !profile.nik || !profile.kode) {
-        alertBox.innerText = "Lengkapi Nama, NIK, dan Kode Akses.";
-        alertBox.classList.remove('hidden');
-        btn.disabled = false; 
-        btn.innerText = "MULAI TES";
-        return;
+    if (!profile.nama || !profile.nik || !profile.kode) {
+      errBox.innerText = "Lengkapi Nama, NIK, dan Kode Akses Jabatan.";
+      errBox.style.display = 'block';
+      btn.disabled = false;
+      btn.innerText = "Mulai Tes";
+      return;
     }
 
     try {
@@ -243,36 +1091,39 @@
         const saved = localStorage.getItem('jawabanCAT_' + profile.nik);
         if (saved) jawabanUser = JSON.parse(saved);
         showExam();
-      } else {
-        throw new Error(res.message);
-      }
+      } else throw new Error(res.message);
     } catch (err) {
-      alertBox.innerText = err.message || "Gagal terhubung ke server.";
-      alertBox.classList.remove('hidden');
-      btn.disabled = false; 
-      btn.innerText = "MULAI TES";
+      errBox.innerText = err.message || "Gagal terhubung ke server.";
+      errBox.style.display = 'block';
+      btn.disabled = false;
+      btn.innerText = "Mulai Tes";
     }
   }
 
   function showExam() {
-    document.getElementById('loginScreen').classList.add('hidden');
-    document.getElementById('examScreen').classList.remove('hidden');
-    ujianAktif = true; 
+    const initials = profile.nama.split(' ').map(w => w[0]).slice(0,2).join('').toUpperCase();
+    document.getElementById('profileAvatar').innerText = initials;
+    document.getElementById('profileName').innerText = profile.nama;
+    document.getElementById('profileJabatan').innerText = profile.jabatan || profile.kode;
+
+    showScreen('examScreen');
+    ujianAktif = true;
     renderSoal();
     startTimer();
   }
 
-  function renderGrid() {
-    const grid = document.getElementById('gridNav');
+  function renderNav() {
+    const grid = document.getElementById('navGrid');
     grid.innerHTML = '';
+    const answered = Object.keys(jawabanUser).length;
+    document.getElementById('statAnswered').innerText = answered;
+    document.getElementById('statEmpty').innerText = dataUjian.length - answered;
+
     dataUjian.forEach((s, i) => {
       const btn = document.createElement('button');
-      const terjawab = jawabanUser[s.id] !== undefined;
-      btn.className = `btn btn-nav ${terjawab ? 'btn-success text-white' : 'btn-outline-secondary'}`;
-      if (i === currentIdx) {
-          btn.classList.add('active-nav');
-          if(!terjawab) btn.classList.replace('btn-outline-secondary', 'btn-secondary');
-      }
+      btn.className = 'nav-btn';
+      if (jawabanUser[s.id] !== undefined) btn.classList.add('answered');
+      if (i === currentIdx) btn.classList.add('current');
       btn.innerText = i + 1;
       btn.onclick = () => { currentIdx = i; renderSoal(); };
       grid.appendChild(btn);
@@ -281,27 +1132,25 @@
 
   function renderSoal() {
     const s = dataUjian[currentIdx];
-    document.getElementById('labelKategori').innerText = s.kategori || "Umum";
-    document.getElementById('noSoal').innerText = "Soal ke-" + (currentIdx + 1);
-    document.getElementById('teksSoal').innerText = s.soal;
-    
-    const container = document.getElementById('opsiJawaban');
-    container.innerHTML = '';
-    
+    document.getElementById('qNum').innerText =
+      String(currentIdx + 1).padStart(2, '0') + ' / ' + String(dataUjian.length).padStart(2, '0');
+    document.getElementById('qCat').innerText = s.kategori || "Umum";
+    document.getElementById('qText').innerText = s.soal;
+
+    const list = document.getElementById('optionsList');
+    list.innerHTML = '';
     ['A','B','C','D','E'].forEach(o => {
       if (s.opsi && s.opsi[o]) {
-          const isSelected = jawabanUser[s.id] === o;
-          const btn = document.createElement('button');
-          btn.className = `opsi-btn ${isSelected ? 'selected' : ''}`;
-          
-          const teksOpsiFinal = formatTanggalIndo(s.opsi[o].toString().trim());
-          
-          btn.innerHTML = `<strong class="me-2">${o}.</strong> ${teksOpsiFinal}`;
-          btn.onclick = () => { simpanJawaban(s.id, o); };
-          container.appendChild(btn);
+        const selected = jawabanUser[s.id] === o;
+        const btn = document.createElement('button');
+        btn.className = 'option-btn' + (selected ? ' selected' : '');
+        const teks = formatTanggalIndo(s.opsi[o].toString().trim());
+        btn.innerHTML = `<span class="opt-label">${o}</span><span class="opt-text">${teks}</span>`;
+        btn.onclick = () => { simpanJawaban(s.id, o); };
+        list.appendChild(btn);
       }
     });
-    renderGrid();
+    renderNav();
   }
 
   function simpanJawaban(id, pilihan) {
@@ -311,98 +1160,82 @@
   }
 
   function nav(step) {
-    currentIdx += step;
-    if (currentIdx < 0) currentIdx = 0;
-    if (currentIdx >= dataUjian.length) currentIdx = dataUjian.length - 1;
+    currentIdx = Math.max(0, Math.min(dataUjian.length - 1, currentIdx + step));
     renderSoal();
   }
 
   function startTimer() {
+    const el = document.getElementById('timerDisplay');
     timer = setInterval(() => {
       sisaWaktu--;
-      let m = Math.floor(sisaWaktu/60);
-      let s = sisaWaktu % 60;
-      document.getElementById('timer').innerText = `${m}:${s < 10 ? '0'+s : s}`;
+      const m = Math.floor(sisaWaktu / 60);
+      const s = sisaWaktu % 60;
+      el.innerText = `${m}:${s < 10 ? '0' + s : s}`;
+      if (sisaWaktu <= 300) el.classList.add('urgent');
       if (sisaWaktu <= 0) {
-          alert("Waktu Habis! Jawaban dikirim otomatis.");
-          prosesSubmit();
+        alert("Waktu habis! Jawaban dikirim otomatis.");
+        prosesSubmit();
       }
     }, 1000);
   }
 
   function finish() {
-    const total = dataUjian.length;
-    const dijawab = Object.keys(jawabanUser).length;
-    const kosong = total - dijawab;
-    
-    let msg = "Apakah Anda yakin ingin mengakhiri dan mengirimkan jawaban?";
-    if (kosong > 0) msg += `\n\nPERINGATAN: ${kosong} soal belum dijawab!`;
-
-    if (confirm(msg)) {
-        prosesSubmit();
-    }
+    const kosong = dataUjian.length - Object.keys(jawabanUser).length;
+    let msg = "Yakin ingin mengakhiri dan mengirimkan jawaban?";
+    if (kosong > 0) msg += `\n\n⚠ ${kosong} soal belum dijawab.`;
+    if (confirm(msg)) prosesSubmit();
   }
 
   async function prosesSubmit() {
-    ujianAktif = false; 
+    ujianAktif = false;
     clearInterval(timer);
     const btn = document.getElementById('btnSubmit');
     btn.disabled = true;
-    btn.innerText = "Mengirim...";
+    btn.innerHTML = 'Mengirim...';
 
-    const payload = { 
-        ...profile, 
-        jawaban: Object.keys(jawabanUser).map(k => ({id: k, pilihan: jawabanUser[k]})) 
+    const payload = {
+      ...profile,
+      jawaban: Object.keys(jawabanUser).map(k => ({ id: k, pilihan: jawabanUser[k] }))
     };
-    
+
     try {
       const res = await callAPI("submit", payload);
       if (res.status === "success") {
-        alert("Berhasil! Jawaban Anda telah diterima oleh sistem.");
-        
+        alert("Berhasil! Jawaban Anda telah diterima.");
         localStorage.removeItem('jawabanCAT_' + profile.nik);
-        document.getElementById('examScreen').classList.add('hidden');
-        document.getElementById('finishScreen').classList.remove('hidden');
-        
-        // ---- Hitung & Tampilkan Detail Layar Akhir ----
+
         const total = dataUjian.length;
         const terjawab = Object.keys(jawabanUser).length;
-        const skorDidapat = res.data.skor || 0;
-        
-        // Menghitung estimasi soal benar (Skor dibagi 5)
-        const hitungBenar = skorDidapat / 5;
+        const skor = res.data.skor || 0;
 
         document.getElementById('totalSoal').innerText = total;
         document.getElementById('soalSelesai').innerText = terjawab;
         document.getElementById('soalKosong').innerText = total - terjawab;
-        document.getElementById('jawabanBenar').innerText = hitungBenar + " Soal"; // Tampil di sini!
-        document.getElementById('skorAkhir').innerText = skorDidapat; 
-        
-      } else {
-        throw new Error(res.message);
-      }
+        document.getElementById('jawabanBenar').innerText = (skor / 5) + " soal";
+        document.getElementById('skorAkhir').innerText = skor;
+
+        showScreen('finishScreen');
+      } else throw new Error(res.message);
     } catch (err) {
-      alert("Error Jaringan: " + err.message + "\nData tersimpan di browser. Coba submit lagi.");
+      alert("Error: " + err.message + "\nData tersimpan di browser. Coba submit lagi.");
       btn.disabled = false;
-      btn.innerText = "Selesai & Submit Nilai";
-      ujianAktif = true; 
+      btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Selesai & Submit`;
+      ujianAktif = true;
     }
   }
 
-  // --- FITUR ANTI-CHEAT ---
+  // Anti-cheat
   document.addEventListener("visibilitychange", () => {
-      if (document.hidden && ujianAktif) {
-          peringatanCurang++;
-          
-          if (peringatanCurang >= 3) {
-              alert("PELANGGARAN FATAL!\nAnda telah keluar dari layar ujian sebanyak 3 kali. Ujian dihentikan dan disubmit secara otomatis.");
-              prosesSubmit();
-          } else {
-              alert(`PERINGATAN KECURANGAN (${peringatanCurang}/3)!\nSistem mendeteksi Anda meninggalkan halaman ujian. Jika mencapai 3 kali, ujian akan diakhiri paksa.`);
-          }
+    if (document.hidden && ujianAktif) {
+      peringatanCurang++;
+      if (peringatanCurang >= 3) {
+        alert("PELANGGARAN FATAL! Anda telah keluar dari layar ujian 3 kali. Ujian dihentikan otomatis.");
+        prosesSubmit();
+      } else {
+        alert(`PERINGATAN (${peringatanCurang}/3): Sistem mendeteksi Anda meninggalkan halaman ujian.`);
       }
+    }
   });
-
 </script>
 </body>
 </html>
