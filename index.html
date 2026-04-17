@@ -453,7 +453,7 @@
 </div>
 
 <script>
-  const API_URL = "https://script.google.com/macros/s/AKfycbwZwPggjxSpBa4PiHcah9dAmRizUmtRHA6oJV7Yahe91vrmvjliXd0Yx_6kfG5UY3R-NQ/exec";
+  const API_URL = "https://script.google.com/macros/s/AKfycbx7rUHxiqCMe00wsEyk6hUlLW_0yjvnuKqJ75vZgGF4bEt9_0Mk9jJMIm6ky-VVu9FYkg/exec";
 
   let dataUjian = [];
   let jawabanUser = {};
@@ -636,6 +636,9 @@
     if (confirm(msg)) prosesSubmit();
   }
 
+  // =====================================================================
+  // BAGIAN YANG DIPERBAIKI UNTUK MENANGANI SKOR DESIMAL & JAWABAN BENAR
+  // =====================================================================
   async function prosesSubmit() {
     ujianAktif = false;
     clearInterval(timer);
@@ -654,15 +657,33 @@
       const res = await callAPI("submit", payload);
       if (res.status === "success") {
         localStorage.removeItem('jawabanCAT_' + profile.nik);
+        
         const total = dataUjian.length;
         const terjawab = Object.keys(jawabanUser).length;
+        
         const skor = res.data.skor || 0;
+        // Menggunakan "benar" dari data respons langsung (bukan dibagi-bagi lagi)
+        const benar = res.data.benar !== undefined ? res.data.benar : 0; 
+        
+        let skorTampil = skor;
+        
+        // FIX: Jika skor yang didapat ternyata desimal (seperti 0.2), kalikan 100 agar menjadi persentase 20.
+        // Juga tambahkan "%" agar pengguna yakin itu persentase (opsional).
+        if (typeof skor === "number" && skor > 0 && skor <= 1) {
+            skorTampil = Math.round(skor * 100) + "%";
+        } else if (skor === 0) {
+            skorTampil = "0"; // Jika 0 biarkan 0
+        }
 
         document.getElementById('totalSoal').innerText = total;
         document.getElementById('soalSelesai').innerText = terjawab;
         document.getElementById('soalKosong').innerText = total - terjawab;
-        document.getElementById('jawabanBenar').innerText = (skor / 5) + " soal";
-        document.getElementById('skorAkhir').innerText = skor;
+        
+        // FIX: Tampilkan jumlah soal benar secara akurat
+        document.getElementById('jawabanBenar').innerText = benar + " soal"; 
+        
+        // FIX: Tampilkan Skor yang sudah diformat dengan benar
+        document.getElementById('skorAkhir').innerText = skorTampil;
 
         if (document.exitFullscreen) { document.exitFullscreen(); }
         showScreen('finishScreen');
