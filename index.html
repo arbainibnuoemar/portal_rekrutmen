@@ -342,8 +342,8 @@
             <input type="text" id="nama" class="field-input" placeholder="Masukkan nama sesuai KTP">
           </div>
           <div class="field-group">
-            <label class="field-label">NIK (KTP)</label>
-            <input type="text" id="nik" class="field-input" placeholder="16 digit NIK">
+            <label class="field-label">Nomor Peserta</label>
+            <input type="text" id="nomor_peserta" class="field-input" placeholder="Masukkan Nomor Peserta">
           </div>
           <div class="field-group">
             <label class="field-label">Kode Akses Jabatan</label>
@@ -453,7 +453,7 @@
 </div>
 
 <script>
-  const API_URL = "https://script.google.com/macros/s/AKfycbx7rUHxiqCMe00wsEyk6hUlLW_0yjvnuKqJ75vZgGF4bEt9_0Mk9jJMIm6ky-VVu9FYkg/exec";
+  const API_URL = "https://script.google.com/macros/s/AKfycbwFwIj-tbCBXz3hjZFpNdMbXdLVdDjqYbuZHLWo_kD_QfT_d3qJ3LeEsO_9UzoJWxJStQ/exec";
 
   let dataUjian = [];
   let jawabanUser = {};
@@ -465,7 +465,7 @@
   // Variabel Sistem Anti Curang
   let peringatanCurang = 0;
   let ujianAktif = false;
-  let isViolating = false; // Mencegah perhitungan double saat multi-event di mobile
+  let isViolating = false; 
   const overlay = document.getElementById('cheatOverlay');
 
   function showScreen(id) {
@@ -484,7 +484,6 @@
     else if (doc.msRequestFullscreen) { await doc.msRequestFullscreen(); }
   }
 
-  // Cek apakah mode fullscreen aktif
   function isFullscreen() {
     return document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;
   }
@@ -521,13 +520,13 @@
 
     profile = {
       nama: (document.getElementById('nama').value || "").trim(),
-      nik: (document.getElementById('nik').value || "").trim(),
+      nomor_peserta: (document.getElementById('nomor_peserta').value || "").trim(), // Menggunakan nomor_peserta
       kode: (document.getElementById('kode').value || "").trim(),
       konfirmasi: "mulai tes"
     };
 
-    if (!profile.nama || !profile.nik || !profile.kode) {
-      errBox.innerText = "Lengkapi Nama, NIK, dan Kode Akses Jabatan.";
+    if (!profile.nama || !profile.nomor_peserta || !profile.kode) {
+      errBox.innerText = "Lengkapi Nama, Nomor Peserta, dan Kode Akses Jabatan.";
       errBox.style.display = 'block';
       btn.disabled = false;
       btn.innerText = "Mulai Tes (Masuk Fullscreen)";
@@ -539,7 +538,8 @@
       if (res.status === "success") {
         dataUjian = res.data.soal;
         profile.jabatan = res.data.jabatan;
-        const saved = localStorage.getItem('jawabanCAT_' + profile.nik);
+        // Key localstorage disesuaikan dengan nomor_peserta
+        const saved = localStorage.getItem('jawabanCAT_' + profile.nomor_peserta);
         if (saved) jawabanUser = JSON.parse(saved);
         showExam();
       } else throw new Error(res.message);
@@ -605,7 +605,7 @@
 
   function simpanJawaban(id, pilihan) {
     jawabanUser[id] = pilihan;
-    localStorage.setItem('jawabanCAT_' + profile.nik, JSON.stringify(jawabanUser));
+    localStorage.setItem('jawabanCAT_' + profile.nomor_peserta, JSON.stringify(jawabanUser));
     renderSoal();
   }
 
@@ -636,9 +636,6 @@
     if (confirm(msg)) prosesSubmit();
   }
 
-  // =====================================================================
-  // BAGIAN YANG DIPERBAIKI UNTUK MENANGANI SKOR DESIMAL & JAWABAN BENAR
-  // =====================================================================
   async function prosesSubmit() {
     ujianAktif = false;
     clearInterval(timer);
@@ -656,33 +653,28 @@
     try {
       const res = await callAPI("submit", payload);
       if (res.status === "success") {
-        localStorage.removeItem('jawabanCAT_' + profile.nik);
+        localStorage.removeItem('jawabanCAT_' + profile.nomor_peserta);
         
         const total = dataUjian.length;
         const terjawab = Object.keys(jawabanUser).length;
         
         const skor = res.data.skor || 0;
-        // Menggunakan "benar" dari data respons langsung (bukan dibagi-bagi lagi)
         const benar = res.data.benar !== undefined ? res.data.benar : 0; 
         
         let skorTampil = skor;
         
-        // FIX: Jika skor yang didapat ternyata desimal (seperti 0.2), kalikan 100 agar menjadi persentase 20.
-        // Juga tambahkan "%" agar pengguna yakin itu persentase (opsional).
         if (typeof skor === "number" && skor > 0 && skor <= 1) {
             skorTampil = Math.round(skor * 100) + "%";
         } else if (skor === 0) {
-            skorTampil = "0"; // Jika 0 biarkan 0
+            skorTampil = "0"; 
         }
 
         document.getElementById('totalSoal').innerText = total;
         document.getElementById('soalSelesai').innerText = terjawab;
         document.getElementById('soalKosong').innerText = total - terjawab;
         
-        // FIX: Tampilkan jumlah soal benar secara akurat
         document.getElementById('jawabanBenar').innerText = benar + " soal"; 
         
-        // FIX: Tampilkan Skor yang sudah diformat dengan benar
         document.getElementById('skorAkhir').innerText = skorTampil;
 
         if (document.exitFullscreen) { document.exitFullscreen(); }
@@ -696,26 +688,18 @@
     }
   }
 
-
-  /* ==========================================
-     SISTEM KEAMANAN & ANTI CURANG (CLIENT SIDE)
-     ========================================== */
-
   function catatPelanggaran(alasan) {
-    if (!ujianAktif || isViolating) return; // Mencegah hit ganda
+    if (!ujianAktif || isViolating) return; 
     
     isViolating = true;
     peringatanCurang++;
     
-    // Munculkan Banner di bagian atas (stay terus)
     document.getElementById('bannerWarnCount').innerText = peringatanCurang;
     document.getElementById('warningBanner').classList.add('active');
 
-    // Munculkan Overlay Kunci Layar
     document.getElementById('overlayWarnCount').innerText = peringatanCurang;
     overlay.style.display = 'flex';
 
-    // Jika sudah 3 kali, auto-submit
     if (peringatanCurang >= 3) {
       document.getElementById('cheatCardContent').innerHTML = `
         <h1 style="color:#ef4444;">🔒 UJIAN DIHENTIKAN</h1>
@@ -725,38 +709,33 @@
     }
   }
 
-  // Fungsi saat peserta mengklik tombol "Lanjut" di Overlay Pop-up
   async function resumeExam() {
     try {
       await requestFullscreen();
-      // Verifikasi apakah berhasil masuk layar penuh
       setTimeout(() => {
         if (isFullscreen()) {
           overlay.style.display = 'none';
-          isViolating = false; // Buka kunci detektor
+          isViolating = false; 
         } else {
           alert("Akses layar penuh ditolak oleh browser. Pastikan Anda mengizinkan Layar Penuh.");
         }
-      }, 300); // Sedikit delay agar browser sempat merespon
+      }, 300); 
     } catch(e) {
-      // Fallback untuk iOS Safari yang mungkin bermasalah dengan API fullscreen
       console.log("Browser tidak mendeteksi Fullscreen API normal.", e);
       overlay.style.display = 'none';
       isViolating = false;
     }
   }
 
-  // Deteksi kelakuan peserta
   document.addEventListener('fullscreenchange', () => {
     if (!isFullscreen() && ujianAktif) {
       catatPelanggaran(); 
     }
   });
 
-  // Blur untuk deteksi Screenshot / Recent Apps
   window.addEventListener("blur", () => {
     if (ujianAktif) {
-      overlay.style.display = 'flex'; // Paksa langsung tutupi layar biar hasil screenshot gelap
+      overlay.style.display = 'flex'; 
       catatPelanggaran();
     }
   });
@@ -767,10 +746,8 @@
     }
   });
 
-  // Blokir Klik Kanan
   document.addEventListener('contextmenu', event => { if(ujianAktif) event.preventDefault(); });
 
-  // Blokir Shortcut (F12, Copy, Paste, Print, dll)
   document.addEventListener('keydown', event => {
     if (!ujianAktif) return;
     if (event.key === 'F12') { event.preventDefault(); }
