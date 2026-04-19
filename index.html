@@ -63,6 +63,29 @@
 
     .page-wrap { position: relative; z-index: 1; min-height: 100vh; }
 
+    /* ── CUSTOM IN-APP MODAL (PENGGANTI ALERT/CONFIRM BROWSER) ── */
+    .custom-modal-overlay {
+      position: fixed; inset: 0; background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(4px);
+      display: none; align-items: center; justify-content: center; z-index: 999999;
+      opacity: 0; transition: opacity 0.2s ease;
+    }
+    .custom-modal-overlay.active { display: flex; opacity: 1; }
+    .custom-modal-card {
+      background: var(--bg-card); width: 90%; max-width: 400px; padding: 24px;
+      border-radius: 16px; border: 1px solid var(--border);
+      box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+      transform: translateY(20px); transition: transform 0.2s ease;
+    }
+    .custom-modal-overlay.active .custom-modal-card { transform: translateY(0); }
+    .custom-modal-card h3 { color: var(--text-primary); font-size: 18px; font-weight: 700; margin-bottom: 12px; }
+    .custom-modal-card p { color: var(--text-secondary); font-size: 14px; line-height: 1.6; margin-bottom: 24px; white-space: pre-line; }
+    .custom-modal-actions { display: flex; justify-content: flex-end; gap: 12px; }
+    .btn-modal { padding: 12px 18px; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; border: none; transition: all 0.15s; }
+    .btn-modal-cancel { background: var(--bg-input); border: 1px solid var(--border); color: var(--text-secondary); }
+    .btn-modal-cancel:hover { background: var(--bg-elevated); color: var(--text-primary); }
+    .btn-modal-confirm { background: var(--accent); color: white; }
+    .btn-modal-confirm:hover { background: #1d4ed8; }
+
     /* ── OVERLAY ANTI CHEAT (LAYAR HITAM & POP-UP) ── */
     #cheatOverlay {
       position: fixed; inset: 0; background: rgba(10, 12, 16, 0.98); color: white;
@@ -250,6 +273,15 @@
   </style>
 </head>
 <body>
+
+<div id="customModal" class="custom-modal-overlay">
+  <div class="custom-modal-card">
+    <h3 id="modalTitle">Konfirmasi</h3>
+    <p id="modalMessage">Pesan di sini</p>
+    <div class="custom-modal-actions" id="modalActions">
+      </div>
+  </div>
+</div>
 
 <div id="cheatOverlay">
   <div class="cheat-card" id="cheatCardContent">
@@ -453,6 +485,7 @@
 </div>
 
 <script>
+  // GANTI URL INI PASTIKAN SAMA DENGAN DEPLOY WEB APP GAS TERBARUMU
   const API_URL = "https://script.google.com/macros/s/AKfycbyZIfx492ed-usV15jNa8rpnP-bSzk2HhKLVntc-bGx1Eyt-aeJDI0L3bH-eEa8Rgio4A/exec";
 
   let dataUjian = [];
@@ -462,11 +495,49 @@
   let sisaWaktu = 100 * 60;
   let profile = {};
   
-  // Variabel Sistem Anti Curang
   let peringatanCurang = 0;
   let ujianAktif = false;
   let isViolating = false; 
   const overlay = document.getElementById('cheatOverlay');
+
+  /* ==========================================
+     FUNGSI CUSTOM MODAL (Pengganti Alert/Confirm)
+     ========================================== */
+  function showModal(title, message, type, callback) {
+    const modalEl = document.getElementById('customModal');
+    document.getElementById('modalTitle').innerText = title;
+    document.getElementById('modalMessage').innerText = message;
+    
+    const actionsEl = document.getElementById('modalActions');
+    actionsEl.innerHTML = ''; // Clear existing buttons
+
+    if (type === 'alert') {
+      const btnOk = document.createElement('button');
+      btnOk.className = 'btn-modal btn-modal-confirm';
+      btnOk.innerText = 'Mengerti';
+      btnOk.onclick = () => { closeModal(); if (callback) callback(); };
+      actionsEl.appendChild(btnOk);
+    } 
+    else if (type === 'confirm') {
+      const btnCancel = document.createElement('button');
+      btnCancel.className = 'btn-modal btn-modal-cancel';
+      btnCancel.innerText = 'Batal';
+      btnCancel.onclick = () => { closeModal(); };
+      
+      const btnOk = document.createElement('button');
+      btnOk.className = 'btn-modal btn-modal-confirm';
+      btnOk.innerText = 'Ya, Submit';
+      btnOk.onclick = () => { closeModal(); if (callback) callback(); };
+      
+      actionsEl.appendChild(btnCancel);
+      actionsEl.appendChild(btnOk);
+    }
+    modalEl.classList.add('active');
+  }
+
+  function closeModal() {
+    document.getElementById('customModal').classList.remove('active');
+  }
 
   function showScreen(id) {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -476,7 +547,6 @@
   function showInfo() { showScreen('infoScreen'); }
   function showLogin() { showScreen('loginScreen'); }
 
-  // FUNGSI MEMINTA FULLSCREEN
   async function requestFullscreen() {
     const doc = document.documentElement;
     if (doc.requestFullscreen) { await doc.requestFullscreen(); } 
@@ -520,7 +590,7 @@
 
     profile = {
       nama: (document.getElementById('nama').value || "").trim(),
-      nomor_peserta: (document.getElementById('nomor_peserta').value || "").trim(), // Menggunakan nomor_peserta
+      nomor_peserta: (document.getElementById('nomor_peserta').value || "").trim(), 
       kode: (document.getElementById('kode').value || "").trim(),
       konfirmasi: "mulai tes"
     };
@@ -538,7 +608,6 @@
       if (res.status === "success") {
         dataUjian = res.data.soal;
         profile.jabatan = res.data.jabatan;
-        // Key localstorage disesuaikan dengan nomor_peserta
         const saved = localStorage.getItem('jawabanCAT_' + profile.nomor_peserta);
         if (saved) jawabanUser = JSON.parse(saved);
         showExam();
@@ -622,9 +691,11 @@
       const s = sisaWaktu % 60;
       el.innerText = `${m}:${s < 10 ? '0' + s : s}`;
       if (sisaWaktu <= 300) el.classList.add('urgent');
+      
+      // PERUBAHAN: Alert browser diganti jadi showModal
       if (sisaWaktu <= 0) {
-        alert("Waktu habis! Jawaban dikirim otomatis.");
-        prosesSubmit();
+        clearInterval(timer);
+        showModal("Waktu Habis", "Waktu ujian Anda telah habis. Sistem akan otomatis mengirimkan jawaban Anda sekarang.", "alert", prosesSubmit);
       }
     }, 1000);
   }
@@ -632,8 +703,10 @@
   function finish() {
     const kosong = dataUjian.length - Object.keys(jawabanUser).length;
     let msg = "Yakin ingin mengakhiri dan mengirimkan jawaban?";
-    if (kosong > 0) msg += `\n\n⚠ ${kosong} soal belum dijawab.`;
-    if (confirm(msg)) prosesSubmit();
+    if (kosong > 0) msg += `\n\n⚠ Anda masih memiliki ${kosong} soal yang belum dijawab.`;
+    
+    // PERUBAHAN: Confirm browser diganti jadi showModal
+    showModal("Konfirmasi Submit", msg, "confirm", prosesSubmit);
   }
 
   async function prosesSubmit() {
@@ -662,7 +735,6 @@
         const benar = res.data.benar !== undefined ? res.data.benar : 0; 
         
         let skorTampil = skor;
-        
         if (typeof skor === "number" && skor > 0 && skor <= 1) {
             skorTampil = Math.round(skor * 100) + "%";
         } else if (skor === 0) {
@@ -672,19 +744,19 @@
         document.getElementById('totalSoal').innerText = total;
         document.getElementById('soalSelesai').innerText = terjawab;
         document.getElementById('soalKosong').innerText = total - terjawab;
-        
         document.getElementById('jawabanBenar').innerText = benar + " soal"; 
-        
         document.getElementById('skorAkhir').innerText = skorTampil;
 
         if (document.exitFullscreen) { document.exitFullscreen(); }
         showScreen('finishScreen');
       } else throw new Error(res.message);
     } catch (err) {
-      alert("Error: " + err.message + "\nData tersimpan di browser. Coba submit lagi.");
+      // PERUBAHAN: Alert error browser diganti jadi showModal
+      showModal("Pemberitahuan Sistem", err.message + "\n\nData Anda masih tersimpan aman di HP. Silakan klik tombol 'Selesai & Submit' kembali.", "alert");
+      
       btn.disabled = false;
       btn.innerHTML = `Selesai & Submit`;
-      ujianAktif = true;
+      ujianAktif = true; // Aktifkan lagi agar bisa resubmit
     }
   }
 
@@ -717,6 +789,7 @@
           overlay.style.display = 'none';
           isViolating = false; 
         } else {
+          // Alert di sini dibiarkan native agar browser mem-prompt user untuk izin
           alert("Akses layar penuh ditolak oleh browser. Pastikan Anda mengizinkan Layar Penuh.");
         }
       }, 300); 
@@ -728,7 +801,7 @@
   }
 
   document.addEventListener('fullscreenchange', () => {
-    if (!isFullscreen() && ujianAktif) {
+    if (!isFullscreen() && ujianAktif && document.getElementById('customModal').classList.contains('active') === false) {
       catatPelanggaran(); 
     }
   });
