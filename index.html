@@ -1,835 +1,127 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portal Seleksi — Kanwil Kemenhaj Kaltara 2026</title>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    :root {
-      var(--bg): #f4f7fb;              
-      --bg-card: #ffffff;         
-      --bg-elevated: #f8fafc;     
-      --bg-input: #ffffff;        
-      --border: #e2e8f0;          
-      --border-hover: #cbd5e1;    
-      --border-accent: rgba(37, 99, 235, 0.4); 
-      
-      --text-primary: #0f172a;    
-      --text-secondary: #475569;  
-      --text-muted: #64748b;      
-      
-      --accent: #2563eb;          
-      --accent-dim: rgba(37, 99, 235, 0.08);
-      --accent-glow: rgba(37, 99, 235, 0.15);
-      
-      --success: #16a34a;         
-      --success-dim: rgba(22, 163, 74, 0.1);
-      
-      --danger: #dc2626;          
-      --danger-dim: rgba(220, 38, 38, 0.1);
-      
-      --warning: #d97706;         
-      --warning-dim: rgba(217, 119, 6, 0.1);
-      
-      --gold: #ca8a04;            
-      --gold-dim: rgba(202, 138, 4, 0.1);
-    }
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@500&display=swap');
+  .exam-page {
+    min-height: 520px;
+    background: #f4f7fb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+    font-family: 'DM Sans', sans-serif;
+    border-radius: var(--border-radius-lg);
+  }
+  .exam-card {
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 4px 24px rgba(37,99,235,0.08), 0 1px 4px rgba(0,0,0,0.06);
+    padding: 2.5rem 2rem;
+    max-width: 460px;
+    width: 100%;
+    text-align: center;
+  }
+  .success-icon-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: #dcfce7;
+    margin: 0 auto 1.5rem;
+  }
+  .exam-title {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 0.75rem;
+    line-height: 1.2;
+  }
+  .exam-desc {
+    font-size: 15px;
+    color: #4b5563;
+    line-height: 1.65;
+    margin: 0 0 1.5rem;
+  }
+  .exam-notice {
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.75rem;
+    text-align: left;
+  }
+  .exam-notice-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    color: #2563eb;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    display: block;
+  }
+  .exam-notice p {
+    font-size: 14px;
+    color: #1e40af;
+    line-height: 1.6;
+    margin: 0;
+  }
+  .exam-cta {
+    display: block;
+    width: 100%;
+    background: #2563eb;
+    color: #ffffff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    border-radius: 12px;
+    padding: 0.875rem 1rem;
+    text-decoration: none;
+    box-sizing: border-box;
+    transition: background 0.15s;
+    letter-spacing: 0.01em;
+  }
+  .exam-cta:hover { background: #1d4ed8; }
+  .exam-cta-icon {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 8px;
+    width: 18px;
+    height: 18px;
+  }
+</style>
 
-    body {
-      background: #f4f7fb;
-      color: var(--text-primary);
-      font-family: 'DM Sans', sans-serif;
-      min-height: 100vh;
-      line-height: 1.6;
-      overflow-x: hidden;
-      
-      /* FITUR ANTI COPY */
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-      -webkit-touch-callout: none;
-    }
+<div class="exam-page">
+  <div class="exam-card">
 
-    body::before {
-      content: ''; position: fixed; inset: 0;
-      background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(37, 99, 235, 0.06) 0%, transparent 70%),
-                  radial-gradient(ellipse 40% 40% at 90% 80%, rgba(22, 163, 74, 0.04) 0%, transparent 60%);
-      pointer-events: none; z-index: 0;
-    }
+    <div class="success-icon-wrap">
+      <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <polyline points="8 12 11 15 16 9"/>
+      </svg>
+    </div>
 
-    .page-wrap { position: relative; z-index: 1; min-height: 100vh; }
+    <h1 class="exam-title">Terima Kasih!</h1>
 
-    /* ── CUSTOM IN-APP MODAL (PENGGANTI ALERT/CONFIRM BROWSER) ── */
-    .custom-modal-overlay {
-      position: fixed; inset: 0; background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(4px);
-      display: none; align-items: center; justify-content: center; z-index: 999999;
-      opacity: 0; transition: opacity 0.2s ease;
-    }
-    .custom-modal-overlay.active { display: flex; opacity: 1; }
-    .custom-modal-card {
-      background: var(--bg-card); width: 90%; max-width: 400px; padding: 24px;
-      border-radius: 16px; border: 1px solid var(--border);
-      box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
-      transform: translateY(20px); transition: transform 0.2s ease;
-    }
-    .custom-modal-overlay.active .custom-modal-card { transform: translateY(0); }
-    .custom-modal-card h3 { color: var(--text-primary); font-size: 18px; font-weight: 700; margin-bottom: 12px; }
-    .custom-modal-card p { color: var(--text-secondary); font-size: 14px; line-height: 1.6; margin-bottom: 24px; white-space: pre-line; }
-    .custom-modal-actions { display: flex; justify-content: flex-end; gap: 12px; }
-    .btn-modal { padding: 12px 18px; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; border: none; transition: all 0.15s; }
-    .btn-modal-cancel { background: var(--bg-input); border: 1px solid var(--border); color: var(--text-secondary); }
-    .btn-modal-cancel:hover { background: var(--bg-elevated); color: var(--text-primary); }
-    .btn-modal-confirm { background: var(--accent); color: white; }
-    .btn-modal-confirm:hover { background: #1d4ed8; }
+    <p class="exam-desc">
+      Pelaksanaan tahapan Tes Tertulis Rekrutmen Outsourcing Kanwil Kemenhaj Provinsi Kalimantan Utara TA 2026 telah selesai.
+    </p>
 
-    /* ── OVERLAY ANTI CHEAT (LAYAR HITAM & POP-UP) ── */
-    #cheatOverlay {
-      position: fixed; inset: 0; background: rgba(10, 12, 16, 0.98); color: white;
-      z-index: 99999; display: none; align-items: center; justify-content: center;
-      flex-direction: column; text-align: center; padding: 24px;
-      backdrop-filter: blur(10px);
-    }
-    .cheat-card {
-      background: #1e293b; padding: 32px 24px; border-radius: 20px;
-      border: 1px solid rgba(220, 38, 38, 0.3); max-width: 400px; width: 100%;
-      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
-    }
-    .cheat-card h1 { font-size: 20px; font-weight: 700; color: #f87171; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; }
-    .cheat-card p { color: #cbd5e1; font-size: 14px; margin-bottom: 20px; }
-    .cheat-counter {
-      background: rgba(220, 38, 38, 0.15); border: 1px solid rgba(220, 38, 38, 0.4);
-      padding: 12px; border-radius: 12px; font-family: 'DM Mono', monospace; font-size: 18px;
-      font-weight: 700; color: #ef4444; margin-bottom: 24px;
-    }
+    <div class="exam-notice">
+      <span class="exam-notice-label">Informasi Penting</span>
+      <p>Untuk pembaruan informasi kelulusan dan tahapan selanjutnya, harap pantau terus media sosial resmi kami.</p>
+    </div>
 
-    /* ── BANNER PERINGATAN (DI ATAS SOAL) ── */
-    #warningBanner {
-      background: #fef2f2; border: 1px solid #f87171; color: #b91c1c;
-      padding: 12px 20px; border-radius: 12px; font-size: 13px; font-weight: 600;
-      margin-bottom: 24px; display: none; align-items: center; gap: 10px;
-      box-shadow: 0 4px 6px -1px rgba(220, 38, 38, 0.1);
-    }
-    #warningBanner.active { display: flex; }
-    #warningBanner svg { width: 20px; height: 20px; flex-shrink: 0; }
+    <a href="https://instagram.com/kemenhaj.kaltara" target="_blank" rel="noopener noreferrer" class="exam-cta">
+      <svg class="exam-cta-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+        <circle cx="12" cy="12" r="4"/>
+        <circle cx="17.5" cy="6.5" r="1" fill="#fff" stroke="none"/>
+      </svg>
+      Update Info di IG @kemenhaj.kaltara
+    </a>
 
-    /* ── TOP BAR ── */
-    .topbar { display: flex; align-items: center; justify-content: space-between; padding: 16px 32px; border-bottom: 1px solid var(--border); backdrop-filter: blur(20px); background: rgba(255, 255, 255, 0.85); position: sticky; top: 0; z-index: 100; }
-    .topbar-brand { display: flex; align-items: center; gap: 12px; }
-    .brand-icon { width: 32px; height: 32px; background: linear-gradient(135deg, var(--accent), #60a5fa); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
-    .brand-icon svg { width: 18px; height: 18px; }
-    .brand-name { font-size: 14px; font-weight: 500; color: var(--text-secondary); }
-    .brand-name span { color: var(--text-primary); font-weight: 600; }
-    .topbar-badge { font-size: 11px; font-family: 'DM Mono', monospace; color: var(--accent); background: var(--accent-dim); border: 1px solid var(--border-accent); padding: 4px 10px; border-radius: 20px; font-weight: 600; letter-spacing: 0.05em; }
-
-    /* ── SCREEN SYSTEM ── */
-    .screen { display: none; }
-    .screen.active { display: flex; }
-
-    /* ── SCREEN: INFO ── */
-    #infoScreen { min-height: calc(100vh - 65px); align-items: center; justify-content: center; padding: 48px 16px; }
-    .info-container { width: 100%; max-width: 640px; }
-    .info-hero { text-align: center; margin-bottom: 40px; }
-    .info-eyebrow { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-family: 'DM Mono', monospace; font-weight: 600; letter-spacing: 0.12em; color: var(--accent); background: var(--accent-dim); border: 1px solid var(--border-accent); padding: 5px 12px; border-radius: 20px; margin-bottom: 20px; text-transform: uppercase; }
-    .info-eyebrow::before { content: ''; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; animation: pulse 2s infinite; }
-    @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.6; transform: scale(0.8); } }
-    .info-title { font-size: 32px; font-weight: 700; color: var(--text-primary); letter-spacing: -0.03em; line-height: 1.2; margin-bottom: 12px; }
-    .info-subtitle { font-size: 15px; color: var(--text-secondary); font-weight: 400; }
-
-    .rules-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin-bottom: 16px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
-    .rules-header { padding: 16px 24px; border-bottom: 1px solid var(--border); font-size: 12px; font-family: 'DM Mono', monospace; font-weight: 600; letter-spacing: 0.1em; color: var(--text-muted); text-transform: uppercase; background: var(--bg-elevated); }
-    .rules-body { padding: 8px 0; }
-    .rule-item { display: flex; align-items: flex-start; gap: 14px; padding: 14px 24px; border-bottom: 1px solid var(--border); }
-    .rule-item:last-child { border-bottom: none; }
-    .rule-icon { width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 13px; margin-top: 1px; }
-    .rule-icon.blue { background: var(--accent-dim); color: var(--accent); }
-    .rule-icon.green { background: var(--success-dim); color: var(--success); }
-    .rule-icon.red { background: var(--danger-dim); color: var(--danger); }
-    .rule-icon.gold { background: var(--gold-dim); color: var(--gold); }
-    .rule-text { font-size: 14px; color: var(--text-secondary); line-height: 1.5; }
-    .rule-text strong { color: var(--text-primary); font-weight: 600; }
-
-    .warning-card { background: var(--danger-dim); border: 1px solid rgba(220,38,38,0.2); border-radius: 12px; padding: 14px 20px; display: flex; gap: 12px; align-items: flex-start; margin-bottom: 24px; font-size: 13px; color: var(--danger); line-height: 1.5; }
-    .warning-card .warn-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
-
-    .btn-cta { width: 100%; padding: 16px; background: var(--accent); color: #ffffff; border: none; border-radius: 12px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 12px var(--accent-glow); }
-    .btn-cta:hover { background: #1d4ed8; transform: translateY(-1px); }
-    .btn-cta:disabled { opacity: 0.5; cursor: not-allowed; }
-
-    /* ── SCREEN: LOGIN ── */
-    #loginScreen { min-height: calc(100vh - 65px); align-items: center; justify-content: center; padding: 48px 16px; }
-    .login-container { width: 100%; max-width: 420px; }
-    .login-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05); }
-    .login-header { padding: 28px 28px 0; text-align: center; }
-    .login-header h2 { font-size: 24px; font-weight: 700; letter-spacing: -0.02em; color: var(--text-primary); margin-bottom: 6px; }
-    .login-header p { font-size: 14px; color: var(--text-secondary); }
-    .login-body { padding: 24px 28px 28px; }
-    .field-group { margin-bottom: 16px; }
-    .field-label { display: block; font-size: 12px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
-    .field-input { width: 100%; background: var(--bg-input); border: 1px solid var(--border); border-radius: 10px; padding: 12px 16px; color: var(--text-primary); font-family: 'DM Sans', sans-serif; font-size: 14px; outline: none; }
-    .field-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
-    .field-input.code-input { font-family: 'DM Mono', monospace; font-size: 16px; letter-spacing: 0.1em; text-align: center; }
-    .error-box { background: var(--danger-dim); border: 1px solid rgba(220,38,38,0.25); border-radius: 10px; padding: 12px 16px; font-size: 13px; color: var(--danger); margin-bottom: 16px; display: none; }
-    .divider { height: 1px; background: var(--border); margin: 24px 0; }
-    .back-link { display: block; text-align: center; font-size: 13px; font-weight: 500; color: var(--text-muted); cursor: pointer; margin-top: 16px; }
-
-    /* ── SCREEN: EXAM ── */
-    #examScreen { min-height: calc(100vh - 65px); align-items: flex-start; padding: 32px 24px; gap: 24px; max-width: 1100px; margin: 0 auto; width: 100%; }
-    .exam-main { flex: 1; min-width: 0; }
-    .exam-sidebar { width: 300px; flex-shrink: 0; position: sticky; top: 90px; }
-
-    .question-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
-    .q-header { display: flex; align-items: center; justify-content: space-between; padding: 18px 28px; border-bottom: 1px solid var(--border); background: var(--bg-elevated); }
-    .q-meta { display: flex; align-items: center; gap: 12px; }
-    .q-num { font-family: 'DM Mono', monospace; font-size: 14px; font-weight: 600; color: var(--text-primary); letter-spacing: 0.05em; }
-    .q-cat { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); background: var(--accent-dim); border: 1px solid var(--border-accent); padding: 4px 10px; border-radius: 20px; }
-    .timer-display { font-family: 'DM Mono', monospace; font-size: 18px; font-weight: 600; color: var(--text-primary); letter-spacing: 0.08em; padding: 6px 14px; background: var(--bg-input); border: 1px solid var(--border); border-radius: 8px; transition: color 0.3s, background 0.3s, border-color 0.3s; }
-    .timer-display.urgent { color: var(--danger); background: #fee2e2; border-color: rgba(220,38,38,0.3); animation: timerPulse 1s infinite; }
-
-    .q-body { padding: 32px 28px; }
-    .q-text { font-size: 17px; line-height: 1.7; color: var(--text-primary); margin-bottom: 32px; font-weight: 400; }
-
-    .options-list { display: flex; flex-direction: column; gap: 12px; }
-    .option-btn { display: flex; align-items: flex-start; gap: 14px; padding: 16px 20px; background: var(--bg-input); border: 1px solid var(--border); border-radius: 10px; cursor: pointer; transition: all 0.15s; text-align: left; width: 100%; font-family: 'DM Sans', sans-serif; color: var(--text-secondary); font-size: 15px; line-height: 1.5; }
-    .option-btn:hover { border-color: var(--accent); background: var(--bg-elevated); color: var(--text-primary); }
-    .option-btn.selected { background: var(--accent-dim); border-color: var(--accent); color: var(--text-primary); font-weight: 500; }
-    .option-btn.selected .opt-label { background: var(--accent); color: #ffffff; border-color: transparent; }
-    .opt-label { width: 28px; height: 28px; border-radius: 7px; background: var(--bg-elevated); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; font-family: 'DM Mono', monospace; flex-shrink: 0; color: var(--text-muted); transition: all 0.15s; }
-    .opt-text { padding-top: 3px; }
-
-    .q-footer { display: flex; justify-content: space-between; padding: 18px 28px; border-top: 1px solid var(--border); background: var(--bg-elevated); gap: 12px; }
-    .btn-nav-q { padding: 12px 24px; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.15s; border: 1px solid var(--border); }
-    .btn-prev { background: var(--bg-input); color: var(--text-secondary); }
-    .btn-next { background: var(--accent); color: #ffffff; border-color: transparent; flex: 1; max-width: 180px; }
-
-    /* Sidebar */
-    .sidebar-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin-bottom: 20px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
-    .sidebar-header { padding: 16px 20px; border-bottom: 1px solid var(--border); font-size: 12px; font-weight: 600; font-family: 'DM Mono', monospace; letter-spacing: 0.05em; color: var(--text-primary); background: var(--bg-elevated); text-transform: uppercase; }
-    .sidebar-body { padding: 20px; }
-    .nav-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
-    .nav-btn { aspect-ratio: 1; border-radius: 8px; font-size: 12px; font-family: 'DM Mono', monospace; font-weight: 600; cursor: pointer; transition: all 0.15s; border: 1px solid var(--border); background: var(--bg-input); color: var(--text-secondary); display: flex; align-items: center; justify-content: center; }
-    .nav-btn.answered { background: var(--success-dim); border-color: rgba(22,163,74,0.3); color: var(--success); }
-    .nav-btn.current { background: var(--accent); border-color: var(--accent); color: #ffffff; box-shadow: 0 0 0 3px var(--accent-dim); }
-
-    .legend { display: flex; gap: 16px; padding: 14px 20px; border-top: 1px solid var(--border); background: var(--bg-elevated); }
-    .legend-item { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 500; color: var(--text-secondary); }
-    .legend-dot { width: 10px; height: 10px; border-radius: 3px; }
-    .legend-dot.green { background: var(--success); }
-    .legend-dot.dim { background: #cbd5e1; }
-
-    .stats-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 20px; }
-    .stat-item { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 12px; padding: 14px; text-align: center; }
-    .stat-val { font-size: 24px; font-weight: 700; font-family: 'DM Mono', monospace; line-height: 1; margin-bottom: 6px; }
-    .stat-val.green { color: var(--success); }
-    .stat-val.muted { color: var(--text-muted); }
-    .stat-label { font-size: 12px; font-weight: 500; color: var(--text-secondary); }
-
-    .btn-submit { width: 100%; padding: 16px; background: var(--success); color: #ffffff; border: none; border-radius: 12px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 4px 12px rgba(22, 163, 74, 0.2); }
-    .btn-submit:hover { background: #15803d; transform: translateY(-1px); }
-
-    /* Profile chip */
-    .profile-chip { display: flex; align-items: center; gap: 12px; padding: 14px 20px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; margin-bottom: 20px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
-    .profile-avatar { width: 36px; height: 36px; border-radius: 10px; background: var(--accent-dim); border: 1px solid rgba(37,99,235,0.2); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: var(--accent); font-family: 'DM Mono', monospace; flex-shrink: 0; }
-    .profile-info { flex: 1; min-width: 0; }
-    .profile-name { font-size: 14px; font-weight: 600; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .profile-jabatan { font-size: 12px; color: var(--text-muted); font-family: 'DM Mono', monospace; }
-
-    /* ── SCREEN: FINISH ── */
-    #finishScreen { min-height: calc(100vh - 65px); align-items: center; justify-content: center; padding: 48px 16px; }
-    .finish-container { width: 100%; max-width: 520px; }
-    .finish-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05); }
-    .finish-top { padding: 40px 32px 28px; text-align: center; border-bottom: 1px solid var(--border); }
-    .finish-icon { width: 64px; height: 64px; border-radius: 16px; background: var(--success-dim); border: 1px solid rgba(22,163,74,0.25); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
-    .finish-icon svg { width: 32px; height: 32px; stroke: var(--success); }
-    .finish-title { font-size: 24px; font-weight: 700; letter-spacing: -0.02em; color: var(--text-primary); margin-bottom: 8px; }
-    .finish-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
-    .score-display { padding: 32px; text-align: center; border-bottom: 1px solid var(--border); background: var(--bg-elevated); }
-    .score-label { font-size: 12px; font-weight: 600; font-family: 'DM Mono', monospace; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px; }
-    .score-number { font-size: 80px; font-weight: 700; font-family: 'DM Mono', monospace; color: var(--accent); letter-spacing: -0.04em; line-height: 1; }
-    .detail-rows { padding: 12px 0; }
-    .detail-row { display: flex; justify-content: space-between; align-items: center; padding: 14px 32px; border-bottom: 1px solid var(--border); }
-    .detail-row:last-child { border-bottom: none; }
-    .detail-key { font-size: 14px; font-weight: 500; color: var(--text-secondary); }
-    .detail-val { font-size: 15px; font-weight: 600; font-family: 'DM Mono', monospace; color: var(--text-primary); }
-    .detail-val.green { color: var(--success); }
-    .detail-val.red { color: var(--danger); }
-    .detail-val.blue { color: var(--accent); }
-    .finish-actions { padding: 24px 32px; border-top: 1px solid var(--border); background: var(--bg-elevated); }
-    .btn-exit { width: 100%; padding: 14px; background: #ffffff; border: 1px solid var(--border); border-radius: 12px; color: var(--text-primary); font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.15s; }
-
-    @media (max-width: 768px) {
-      #examScreen { flex-direction: column; padding: 16px; gap: 16px; }
-      .exam-sidebar { width: 100%; position: static; } 
-      .topbar { padding: 14px 20px; }
-      .info-title { font-size: 26px; }
-      .q-header { flex-direction: column; align-items: flex-start; gap: 12px; padding: 16px; }
-      .q-body { padding: 20px 16px; }
-      .q-text { font-size: 15px; }
-      .option-btn { font-size: 14px; padding: 14px 16px; }
-    }
-  </style>
-</head>
-<body>
-
-<div id="customModal" class="custom-modal-overlay">
-  <div class="custom-modal-card">
-    <h3 id="modalTitle">Konfirmasi</h3>
-    <p id="modalMessage">Pesan di sini</p>
-    <div class="custom-modal-actions" id="modalActions">
-      </div>
   </div>
 </div>
-
-<div id="cheatOverlay">
-  <div class="cheat-card" id="cheatCardContent">
-    <h1>⚠ Akses Soal Terkunci</h1>
-    <p id="cheatReasonText">Sistem mendeteksi Anda keluar dari mode layar penuh atau memindahkan layar (terindikasi screenshot/pindah tab).</p>
-    
-    <div class="cheat-counter">
-      Pelanggaran: <span id="overlayWarnCount">0</span>/3
-    </div>
-
-    <button class="btn-cta" onclick="resumeExam()">Klik Untuk Layar Penuh & Lanjut</button>
-  </div>
-</div>
-
-<div class="page-wrap">
-  <header class="topbar">
-    <div class="topbar-brand">
-      <div class="brand-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
-        </svg>
-      </div>
-      <div class="brand-name"><span>Kemenhaj</span> · Kanwil Kaltara</div>
-    </div>
-    <div class="topbar-badge">TA 2026</div>
-  </header>
-
-  <div id="infoScreen" class="screen active">
-    <div class="info-container">
-      <div class="info-hero">
-        <div class="info-eyebrow">Seleksi Rekrutmen Outsourcing</div>
-        <h1 class="info-title">Panduan Pelaksanaan<br>Tes Rekrutmen Kemenhaj</h1>
-        <p class="info-subtitle">Baca dan pahami seluruh ketentuan sebelum memulai tes</p>
-      </div>
-
-      <div class="rules-card">
-        <div class="rules-header">Tata Tertib & Ketentuan</div>
-        <div class="rules-body">
-          <div class="rule-item">
-            <div class="rule-icon blue">⏱</div>
-            <div class="rule-text">Durasi pengerjaan <strong>100 menit</strong>. Ujian otomatis disubmit saat waktu habis.</div>
-          </div>
-          <div class="rule-item">
-            <div class="rule-icon green">✦</div>
-            <div class="rule-text"><strong>Sistem penilaian:</strong> Jawaban benar +5 poin. Salah/Tidak Terjawab 0 poin.</div>
-          </div>
-          <div class="rule-item">
-            <div class="rule-icon gold">🔒</div>
-            <div class="rule-text"><strong>Wajib Layar Penuh (Fullscreen)</strong>. Ujian akan dikunci secara otomatis jika Anda keluar dari mode fullscreen.</div>
-          </div>
-          
-          <div class="rule-item">
-            <div class="rule-icon blue">🔀</div>
-            <div class="rule-text">Peserta boleh mengerjakan soal <strong>secara acak</strong> sesuai keinginan dengan memilih nomor soal.</div>
-          </div>
-          <div class="rule-item">
-            <div class="rule-icon green">✅</div>
-            <div class="rule-text">Peserta <strong>hanya diperbolehkan</strong> membawa kartu peserta, 1 buah pensil, dan 1 device/Handphone untuk penggunaan tes/ujian.</div>
-          </div>
-          <div class="rule-item">
-            <div class="rule-icon red">🚫</div>
-            <div class="rule-text"><strong>Dilarang membawa</strong> handphone/laptop lain, smartwatch/jam tangan, headset bluetooth/kabel, dompet dan aksesoris lain saat ujian. Barang-barang dimaksud harus disimpan di dalam tas dan dititipkan ke panitia.</div>
-          </div>
-          </div>
-      </div>
-
-      <div class="warning-card">
-        <div class="warn-icon">⚠</div>
-        <div>
-          <strong>PERINGATAN!!!:</strong> Dilarang merekam layar, <i>screenshot</i>, atau berpindah ke aplikasi/tab lain. Pelanggaran 3 kali akan menyebabkan ujian dihentikan otomatis dan kepesertaan akan DIBATALKAN.
-        </div>
-      </div>
-
-      <button class="btn-cta" onclick="showLogin()">Isi Data Peserta →</button>
-    </div>
-  </div>
-
-  <div id="loginScreen" class="screen">
-    <div class="login-container">
-      <div class="login-card">
-        <div class="login-header">
-          <h2>Pendaftaran Ujian</h2>
-          <p>Lengkapi data diri Anda dengan benar</p>
-        </div>
-        <div class="login-body">
-          <div id="errorBox" class="error-box"></div>
-
-          <div class="field-group">
-            <label class="field-label">Nama Lengkap</label>
-            <input type="text" id="nama" class="field-input" placeholder="Masukkan nama sesuai KTP">
-          </div>
-          <div class="field-group">
-            <label class="field-label">Nomor Peserta</label>
-            <input type="text" id="nomor_peserta" class="field-input" placeholder="Masukkan Nomor Peserta">
-          </div>
-          <div class="field-group">
-            <label class="field-label">Kode Akses Jabatan</label>
-            <input type="text" id="kode" class="field-input code-input" placeholder="—  —  —  —">
-          </div>
-
-          <div class="divider"></div>
-          <button class="btn-cta" id="btnLogin" onclick="login()">Mulai Tes (Masuk Fullscreen)</button>
-          <span class="back-link" onclick="showInfo()">← Kembali ke Panduan</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div id="examScreen" class="screen">
-    <div class="exam-main">
-      
-      <div id="warningBanner">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
-          <line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line>
-        </svg>
-        <div>PELANGGARAN TERCATAT (<span id="bannerWarnCount">0</span>/3) : Harap patuhi tata tertib ujian.</div>
-      </div>
-
-      <div class="question-card">
-        <div class="q-header">
-          <div class="q-meta">
-            <span class="q-num" id="qNum">01 / 00</span>
-            <span class="q-cat" id="qCat">Kategori</span>
-          </div>
-          <div id="timerDisplay" class="timer-display">100:00</div>
-        </div>
-        <div class="q-body">
-          <p class="q-text" id="qText"></p>
-          <div class="options-list" id="optionsList"></div>
-        </div>
-        <div class="q-footer">
-          <button class="btn-nav-q btn-prev" onclick="nav(-1)">← Kembali</button>
-          <button class="btn-nav-q btn-next" onclick="nav(1)">Lanjut →</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="exam-sidebar">
-      <div class="profile-chip">
-        <div class="profile-avatar" id="profileAvatar">?</div>
-        <div class="profile-info">
-          <div class="profile-name" id="profileName">—</div>
-          <div class="profile-jabatan" id="profileJabatan">—</div>
-        </div>
-      </div>
-
-      <div class="sidebar-card">
-        <div class="sidebar-header">Progress</div>
-        <div class="stats-row">
-          <div class="stat-item"><div class="stat-val green" id="statAnswered">0</div><div class="stat-label">Terjawab</div></div>
-          <div class="stat-item"><div class="stat-val muted" id="statEmpty">0</div><div class="stat-label">Kosong</div></div>
-        </div>
-      </div>
-
-      <div class="sidebar-card">
-        <div class="sidebar-header">Navigasi Soal</div>
-        <div class="sidebar-body"><div class="nav-grid" id="navGrid"></div></div>
-        <div class="legend">
-          <div class="legend-item"><div class="legend-dot green"></div> Terjawab</div>
-          <div class="legend-item"><div class="legend-dot dim"></div> Belum</div>
-        </div>
-      </div>
-
-      <button class="btn-submit" id="btnSubmit" onclick="finish()">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="20 6 9 17 4 12"></polyline>
-        </svg> Selesai & Submit
-      </button>
-    </div>
-  </div>
-
-  <div id="finishScreen" class="screen">
-    <div class="finish-container">
-      <div class="finish-card">
-        <div class="finish-top">
-          <div class="finish-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
-            </svg>
-          </div>
-          <h2 class="finish-title">Ujian Selesai</h2>
-          <p class="finish-desc">Terima kasih telah mengikuti seleksi rekrutmen outsourcing<br>Kanwil Kemenhaj Provinsi Kalimantan Utara TA 2026.</p>
-        </div>
-        <div class="score-display">
-          <div class="score-label">Skor Akhir</div>
-          <div class="score-number" id="skorAkhir">0</div>
-        </div>
-        <div class="detail-rows">
-          <div class="detail-row"><span class="detail-key">Total soal</span><span class="detail-val" id="totalSoal">0</span></div>
-          <div class="detail-row"><span class="detail-key">Soal terjawab</span><span class="detail-val green" id="soalSelesai">0</span></div>
-          <div class="detail-row"><span class="detail-key">Soal kosong</span><span class="detail-val red" id="soalKosong">0</span></div>
-          <div class="detail-row"><span class="detail-key">Jawaban benar</span><span class="detail-val blue" id="jawabanBenar">0</span></div>
-        </div>
-        <div class="finish-actions">
-          <button class="btn-exit" onclick="location.reload()">Keluar dari Sistem</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script>
-  // GANTI URL INI PASTIKAN SAMA DENGAN DEPLOY WEB APP GAS TERBARUMU
-  const API_URL = "https://script.google.com/macros/s/AKfycbyZIfx492ed-usV15jNa8rpnP-bSzk2HhKLVntc-bGx1Eyt-aeJDI0L3bH-eEa8Rgio4A/exec";
-
-  let dataUjian = [];
-  let jawabanUser = {};
-  let currentIdx = 0;
-  let timer;
-  let sisaWaktu = 100 * 60;
-  let profile = {};
-  
-  let peringatanCurang = 0;
-  let ujianAktif = false;
-  let isViolating = false; 
-  const overlay = document.getElementById('cheatOverlay');
-
-  /* ==========================================
-     FUNGSI CUSTOM MODAL (Pengganti Alert/Confirm)
-     ========================================== */
-  function showModal(title, message, type, callback) {
-    const modalEl = document.getElementById('customModal');
-    document.getElementById('modalTitle').innerText = title;
-    document.getElementById('modalMessage').innerText = message;
-    
-    const actionsEl = document.getElementById('modalActions');
-    actionsEl.innerHTML = ''; // Clear existing buttons
-
-    if (type === 'alert') {
-      const btnOk = document.createElement('button');
-      btnOk.className = 'btn-modal btn-modal-confirm';
-      btnOk.innerText = 'Mengerti';
-      btnOk.onclick = () => { closeModal(); if (callback) callback(); };
-      actionsEl.appendChild(btnOk);
-    } 
-    else if (type === 'confirm') {
-      const btnCancel = document.createElement('button');
-      btnCancel.className = 'btn-modal btn-modal-cancel';
-      btnCancel.innerText = 'Batal';
-      btnCancel.onclick = () => { closeModal(); };
-      
-      const btnOk = document.createElement('button');
-      btnOk.className = 'btn-modal btn-modal-confirm';
-      btnOk.innerText = 'Ya, Submit';
-      btnOk.onclick = () => { closeModal(); if (callback) callback(); };
-      
-      actionsEl.appendChild(btnCancel);
-      actionsEl.appendChild(btnOk);
-    }
-    modalEl.classList.add('active');
-  }
-
-  function closeModal() {
-    document.getElementById('customModal').classList.remove('active');
-  }
-
-  function showScreen(id) {
-    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-  }
-
-  function showInfo() { showScreen('infoScreen'); }
-  function showLogin() { showScreen('loginScreen'); }
-
-  async function requestFullscreen() {
-    const doc = document.documentElement;
-    if (doc.requestFullscreen) { await doc.requestFullscreen(); } 
-    else if (doc.webkitRequestFullscreen) { await doc.webkitRequestFullscreen(); } 
-    else if (doc.msRequestFullscreen) { await doc.msRequestFullscreen(); }
-  }
-
-  function isFullscreen() {
-    return document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;
-  }
-
-  function formatTanggalIndo(text) {
-    if (!text || typeof text !== 'string') return text;
-    const bulanIndo = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
-    const r1 = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/;
-    const r2 = /^(\d{4})-(\d{1,2})-(\d{1,2})/;
-    let d, m, y;
-    if (r1.test(text)) { const mx = text.match(r1); d = parseInt(mx[1]); m = parseInt(mx[2]) - 1; y = parseInt(mx[3]); } 
-    else if (r2.test(text) && !isNaN(Date.parse(text))) { const dt = new Date(text); d = dt.getDate(); m = dt.getMonth(); y = dt.getFullYear(); } 
-    else return text;
-    return m >= 0 && m < 12 ? `${d} ${bulanIndo[m]} ${y}` : text;
-  }
-
-  async function callAPI(action, payloadData) {
-    const r = await fetch(API_URL, {
-      method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" },
-      body: JSON.stringify({ action, payload: payloadData })
-    });
-    return await r.json();
-  }
-
-  async function login() {
-    const btn = document.getElementById('btnLogin');
-    const errBox = document.getElementById('errorBox');
-    
-    try { await requestFullscreen(); } catch(e) { console.log("Gagal memuat fullscreen otomatis"); }
-
-    btn.disabled = true;
-    btn.innerText = "Menghubungkan ke server...";
-    errBox.style.display = 'none';
-
-    profile = {
-      nama: (document.getElementById('nama').value || "").trim(),
-      nomor_peserta: (document.getElementById('nomor_peserta').value || "").trim(), 
-      kode: (document.getElementById('kode').value || "").trim(),
-      konfirmasi: "mulai tes"
-    };
-
-    if (!profile.nama || !profile.nomor_peserta || !profile.kode) {
-      errBox.innerText = "Lengkapi Nama, Nomor Peserta, dan Kode Akses Jabatan.";
-      errBox.style.display = 'block';
-      btn.disabled = false;
-      btn.innerText = "Mulai Tes (Masuk Fullscreen)";
-      return;
-    }
-
-    try {
-      const res = await callAPI("login", profile);
-      if (res.status === "success") {
-        dataUjian = res.data.soal;
-        profile.jabatan = res.data.jabatan;
-        const saved = localStorage.getItem('jawabanCAT_' + profile.nomor_peserta);
-        if (saved) jawabanUser = JSON.parse(saved);
-        showExam();
-      } else throw new Error(res.message);
-    } catch (err) {
-      errBox.innerText = err.message || "Gagal terhubung ke server.";
-      errBox.style.display = 'block';
-      btn.disabled = false;
-      btn.innerText = "Mulai Tes (Masuk Fullscreen)";
-    }
-  }
-
-  function showExam() {
-    const initials = profile.nama.split(' ').map(w => w[0]).slice(0,2).join('').toUpperCase();
-    document.getElementById('profileAvatar').innerText = initials;
-    document.getElementById('profileName').innerText = profile.nama;
-    document.getElementById('profileJabatan').innerText = profile.jabatan || profile.kode;
-
-    showScreen('examScreen');
-    ujianAktif = true;
-    renderSoal();
-    startTimer();
-  }
-
-  function renderNav() {
-    const grid = document.getElementById('navGrid');
-    grid.innerHTML = '';
-    const answered = Object.keys(jawabanUser).length;
-    document.getElementById('statAnswered').innerText = answered;
-    document.getElementById('statEmpty').innerText = dataUjian.length - answered;
-
-    dataUjian.forEach((s, i) => {
-      const btn = document.createElement('button');
-      btn.className = 'nav-btn';
-      if (jawabanUser[s.id] !== undefined) btn.classList.add('answered');
-      if (i === currentIdx) btn.classList.add('current');
-      btn.innerText = i + 1;
-      btn.onclick = () => { currentIdx = i; renderSoal(); };
-      grid.appendChild(btn);
-    });
-  }
-
-  function renderSoal() {
-    const s = dataUjian[currentIdx];
-    document.getElementById('qNum').innerText = String(currentIdx + 1).padStart(2, '0') + ' / ' + String(dataUjian.length).padStart(2, '0');
-    document.getElementById('qCat').innerText = s.kategori || "Umum";
-    document.getElementById('qText').innerText = s.soal;
-
-    const list = document.getElementById('optionsList');
-    list.innerHTML = '';
-    ['A','B','C','D','E'].forEach(o => {
-      if (s.opsi && s.opsi[o]) {
-        const selected = jawabanUser[s.id] === o;
-        const btn = document.createElement('button');
-        btn.className = 'option-btn' + (selected ? ' selected' : '');
-        const teks = formatTanggalIndo(s.opsi[o].toString().trim());
-        btn.innerHTML = `<span class="opt-label">${o}</span><span class="opt-text">${teks}</span>`;
-        btn.onclick = () => { simpanJawaban(s.id, o); };
-        list.appendChild(btn);
-      }
-    });
-    renderNav();
-  }
-
-  function simpanJawaban(id, pilihan) {
-    jawabanUser[id] = pilihan;
-    localStorage.setItem('jawabanCAT_' + profile.nomor_peserta, JSON.stringify(jawabanUser));
-    renderSoal();
-  }
-
-  function nav(step) {
-    currentIdx = Math.max(0, Math.min(dataUjian.length - 1, currentIdx + step));
-    renderSoal();
-  }
-
-  function startTimer() {
-    const el = document.getElementById('timerDisplay');
-    timer = setInterval(() => {
-      sisaWaktu--;
-      const m = Math.floor(sisaWaktu / 60);
-      const s = sisaWaktu % 60;
-      el.innerText = `${m}:${s < 10 ? '0' + s : s}`;
-      if (sisaWaktu <= 300) el.classList.add('urgent');
-      
-      // PERUBAHAN: Alert browser diganti jadi showModal
-      if (sisaWaktu <= 0) {
-        clearInterval(timer);
-        showModal("Waktu Habis", "Waktu ujian Anda telah habis. Sistem akan otomatis mengirimkan jawaban Anda sekarang.", "alert", prosesSubmit);
-      }
-    }, 1000);
-  }
-
-  function finish() {
-    const kosong = dataUjian.length - Object.keys(jawabanUser).length;
-    let msg = "Yakin ingin mengakhiri dan mengirimkan jawaban?";
-    if (kosong > 0) msg += `\n\n⚠ Anda masih memiliki ${kosong} soal yang belum dijawab.`;
-    
-    // PERUBAHAN: Confirm browser diganti jadi showModal
-    showModal("Konfirmasi Submit", msg, "confirm", prosesSubmit);
-  }
-
-  async function prosesSubmit() {
-    ujianAktif = false;
-    clearInterval(timer);
-    overlay.style.display = 'none';
-
-    const btn = document.getElementById('btnSubmit');
-    btn.disabled = true;
-    btn.innerHTML = 'Mengirim...';
-
-    const payload = {
-      ...profile,
-      jawaban: Object.keys(jawabanUser).map(k => ({ id: k, pilihan: jawabanUser[k] }))
-    };
-
-    try {
-      const res = await callAPI("submit", payload);
-      if (res.status === "success") {
-        localStorage.removeItem('jawabanCAT_' + profile.nomor_peserta);
-        
-        const total = dataUjian.length;
-        const terjawab = Object.keys(jawabanUser).length;
-        
-        const skor = res.data.skor || 0;
-        const benar = res.data.benar !== undefined ? res.data.benar : 0; 
-        
-        let skorTampil = skor;
-        if (typeof skor === "number" && skor > 0 && skor <= 1) {
-            skorTampil = Math.round(skor * 100) + "%";
-        } else if (skor === 0) {
-            skorTampil = "0"; 
-        }
-
-        document.getElementById('totalSoal').innerText = total;
-        document.getElementById('soalSelesai').innerText = terjawab;
-        document.getElementById('soalKosong').innerText = total - terjawab;
-        document.getElementById('jawabanBenar').innerText = benar + " soal"; 
-        document.getElementById('skorAkhir').innerText = skorTampil;
-
-        if (document.exitFullscreen) { document.exitFullscreen(); }
-        showScreen('finishScreen');
-      } else throw new Error(res.message);
-    } catch (err) {
-      // PERUBAHAN: Alert error browser diganti jadi showModal
-      showModal("Pemberitahuan Sistem", err.message + "\n\nData Anda masih tersimpan aman di HP. Silakan klik tombol 'Selesai & Submit' kembali.", "alert");
-      
-      btn.disabled = false;
-      btn.innerHTML = `Selesai & Submit`;
-      ujianAktif = true; // Aktifkan lagi agar bisa resubmit
-    }
-  }
-
-  function catatPelanggaran(alasan) {
-    if (!ujianAktif || isViolating) return; 
-    
-    isViolating = true;
-    peringatanCurang++;
-    
-    document.getElementById('bannerWarnCount').innerText = peringatanCurang;
-    document.getElementById('warningBanner').classList.add('active');
-
-    document.getElementById('overlayWarnCount').innerText = peringatanCurang;
-    overlay.style.display = 'flex';
-
-    if (peringatanCurang >= 3) {
-      document.getElementById('cheatCardContent').innerHTML = `
-        <h1 style="color:#ef4444;">🔒 UJIAN DIHENTIKAN</h1>
-        <p>Batas pelanggaran (3/3) telah tercapai. Sistem sedang mengirimkan jawaban Anda secara otomatis...</p>
-      `;
-      prosesSubmit();
-    }
-  }
-
-  async function resumeExam() {
-    try {
-      await requestFullscreen();
-      setTimeout(() => {
-        if (isFullscreen()) {
-          overlay.style.display = 'none';
-          isViolating = false; 
-        } else {
-          // Alert di sini dibiarkan native agar browser mem-prompt user untuk izin
-          alert("Akses layar penuh ditolak oleh browser. Pastikan Anda mengizinkan Layar Penuh.");
-        }
-      }, 300); 
-    } catch(e) {
-      console.log("Browser tidak mendeteksi Fullscreen API normal.", e);
-      overlay.style.display = 'none';
-      isViolating = false;
-    }
-  }
-
-  document.addEventListener('fullscreenchange', () => {
-    if (!isFullscreen() && ujianAktif && document.getElementById('customModal').classList.contains('active') === false) {
-      catatPelanggaran(); 
-    }
-  });
-
-  window.addEventListener("blur", () => {
-    if (ujianAktif) {
-      overlay.style.display = 'flex'; 
-      catatPelanggaran();
-    }
-  });
-
-  document.addEventListener("visibilitychange", () => {
-    if (document.hidden && ujianAktif) {
-      catatPelanggaran();
-    }
-  });
-
-  document.addEventListener('contextmenu', event => { if(ujianAktif) event.preventDefault(); });
-
-  document.addEventListener('keydown', event => {
-    if (!ujianAktif) return;
-    if (event.key === 'F12') { event.preventDefault(); }
-    if (event.ctrlKey) {
-      const forbiddenKeys = ['c', 'v', 'x', 'p', 's', 'u', 'i', 'j'];
-      if (forbiddenKeys.includes(event.key.toLowerCase())) { event.preventDefault(); }
-    }
-  });
-
-</script>
-</body>
-</html>
