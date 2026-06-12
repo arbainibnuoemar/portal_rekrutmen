@@ -432,7 +432,7 @@
           </div>
           <div class="field-group">
             <label class="field-label">NIK Peserta</label>
-            <input type="text" id="nik_peserta" class="field-input" placeholder="Masukkan NIK Peserta">
+            <input type="text" id="nik_peserta" class="field-input" placeholder="Masukkan NIK 16 digit" maxlength="16" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
           </div>
           <div class="field-group">
             <label class="field-label">Kode Akses Jabatan</label>
@@ -541,7 +541,7 @@
 </div>
 
 <script>
-  const API_URL = "https://script.google.com/macros/s/AKfycbyZIbGnB0ldW2wPLYg2r-4oPMLYZHl9RwAOJjnnTxGJke2tkoCNgl9PnJdkh-GPWaLYUQ/exec";
+  const API_URL = "https://script.google.com/macros/s/AKfycbxEMf3gDVUVtnL9BtMflA3wJN11YISm5sHykGePSfv1mhui4h9uvANQs7kOlEHfK6q99A/exec";
 
   let dataUjian = [];
   let jawabanUser = {};
@@ -648,6 +648,13 @@
 
     if (!profile.nama || !profile.nik_peserta || !profile.kode) {
       errBox.innerText = "Lengkapi Nama, NIK Peserta, dan Kode Akses Jabatan.";
+      errBox.style.display = 'block';
+      return;
+    }
+
+    const nikPattern = /^\d{16}$/;
+    if (!nikPattern.test(profile.nik_peserta)) {
+      errBox.innerText = "NIK Peserta harus berupa 16 digit angka.";
       errBox.style.display = 'block';
       return;
     }
